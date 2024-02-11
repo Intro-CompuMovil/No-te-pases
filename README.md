@@ -27,6 +27,7 @@
 ## Tecnologías Utilizadas
 
 -  Kotline
+-  XML
 
 ## Hardware del Dispositivo Móvil
 
