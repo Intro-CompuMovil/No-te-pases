@@ -1,6 +1,6 @@
 # No te pases - Paw Patrol Project
 
-## Integrantes (Paw Patrol)
+## Integrantes
 
 - Isabella Rodriguez
 - Lina Salamanca
