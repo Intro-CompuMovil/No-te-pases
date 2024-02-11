@@ -35,28 +35,19 @@
   - Cámaras para el escaneo de códigos QR y captura de datos relevantes.
   - Sensores de luz para seleccionar de manera automatica el tema de la aplicacion
  
- ## Servicios
+ ## Servicios y uso del Hardware
 
 1. **Servicio de Ubicación y GPS:**
    - Permite a los usuarios recibir notificaciones basadas en su ubicación.
    - Ubica al usuario en su posición geográfica (Por paradas, no en tiempo real).
 
 2. **Servicio de Cámara:**
-   - Captura imágenes para la identificación y autenticación del usuario.
-   - Permite escanear códigos QR en la parada.
+   - Captura Utilizada para escanear capturar imágenes para la identificación informacion.
+   - Permite escanear códigos QR en la parada y en el bus.
 
 3. **Servicios web (Simulada):**
    - Facilita la comunicación entre la aplicación y la base de datos.
    - Realiza transacciones de pago y recarga.
 
-## Hardware
-
-1. **Cámara:**
-   - Utilizada para escanear códigos QR y capturar imágenes para la autenticación biométrica.
-
-2. **Sensor de luz:**
+4. **Sensor de luz:**
    - Utilizada para poder seleccionar de manera dinamica el colorde la aplicacion
-
-3. **GPS:**
-   - Permite el seguimiento en tiempo real y la optimización de rutas.
-
