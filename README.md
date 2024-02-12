@@ -52,3 +52,18 @@
 
 4. **Sensor de luz:**
    - Utilizada para poder seleccionar de manera dinamica el colorde la aplicacion
+
+
+#Wiki
+
+##Integrantes (Nombre, Biografia corta y Foto)
+
+### Santiago Castro Zuluaga
+- Estudiante de quinto semestre de Ingenieria de Sistemas en la Pontificia Universidad Javeriana, tengo 20 años, realizo deporte de manera recurrente en mis dias diarios, soy una persona muy ordenado y mi mayor interes es en el analisis de datos, el machine learning y la musica de todos los tipos
+![Imagen de WhatsApp 2024-02-12 a las 13 07 56_796227c5](https://github.com/Intro-CompuMovil/No-te-pases/assets/117325532/47f85ea8-7791-4457-b287-91367586e1f5)
+
+
+### Isabella Rodriguez
+
+
+### Lina Salamanca
