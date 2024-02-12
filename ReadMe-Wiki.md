@@ -43,7 +43,8 @@
 ![Recarga Cuenta](https://github.com/Intro-CompuMovil/No-te-pases/assets/117325532/feacfd0a-598b-4135-93e1-6ac6e74055f8)
 
 ### Escanear QR
-
+![Escanerar QR](https://github.com/Intro-CompuMovil/No-te-pases/blob/main/Proyecto/Fotografias/Pantalla%20Escanear%20QR.png)
 ### Información del bus
-
+![Información del bus](https://github.com/Intro-CompuMovil/No-te-pases/blob/main/Proyecto/Fotografias/Pantalla%20Informaci%C3%B3n%20bus.png)
 ### Programar alerta
+![Programar alerta](https://github.com/Intro-CompuMovil/No-te-pases/blob/main/Proyecto/Fotografias/Pantalla%20Establecer%20Alarma.png)
