@@ -1,6 +1,6 @@
-#Wiki
+# Wiki
 
-##Integrantes (Nombre, Biografia corta y Foto)
+## Integrantes (Nombre, Biografia corta y Foto)
 
 ### Santiago Castro Zuluaga
 - Estudiante de quinto semestre de Ingenieria de Sistemas en la Pontificia Universidad Javeriana, tengo 20 años, realizo deporte de manera recurrente en mis dias diarios, soy una persona muy ordenado y mi mayor interes es en el analisis de datos, el machine learning y la musica de todos los tipos.
