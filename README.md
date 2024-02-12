@@ -61,7 +61,10 @@
 ### Santiago Castro Zuluaga
 - Estudiante de quinto semestre de Ingenieria de Sistemas en la Pontificia Universidad Javeriana, tengo 20 años, realizo deporte de manera recurrente en mis dias diarios, soy una persona muy ordenado y mi mayor interes es en el analisis de datos, el machine learning y la musica de todos los tipos.
 |
-![Santiago Castro Zuluaga](https://github.com/Intro-CompuMovil/No-te-pases/assets/117325532/47f85ea8-7791-4457-b287-91367586e1f5)
+|
+|
+|
+![Descripción de la imagen](Santiago%20Castro%20Zuluaga){: width="100" height="100"}
 
 
 ### Isabella Rodriguez
