@@ -9,7 +9,7 @@
 
 
 ### Isabella Rodriguez
-- 
+- Estudiante de sexto y séptimo semestre (tengo una mezcla porque cambié de carrera XD) de Ingeniería de Sistemas. Tengo 20 años. Me gusta bailar folclor y tocar música clásica en el piano o violín, al igual que leer libros o ver animes. Me considero ordenada y una persona activa que está siempre dispuesta a aprender.
 
 #### Fotografia
 
@@ -41,3 +41,9 @@
 
 ### Recarga Cuenta
 ![Recarga Cuenta](https://github.com/Intro-CompuMovil/No-te-pases/assets/117325532/feacfd0a-598b-4135-93e1-6ac6e74055f8)
+
+### Escanear QR
+
+### Información del bus
+
+### Programar alerta
