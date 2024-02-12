@@ -1,4 +1,5 @@
 # No te pases - Paw Patrol Project
+### (Apartado de Wiki en el ReadMe-Wiki.md en los documentos)
 
 ## Integrantes
 
