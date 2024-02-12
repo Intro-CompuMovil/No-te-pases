@@ -12,7 +12,7 @@
 - Estudiante de sexto y séptimo semestre (tengo una mezcla porque cambié de carrera XD) de Ingeniería de Sistemas. Tengo 20 años. Me gusta bailar folclor y tocar música clásica en el piano o violín, al igual que leer libros o ver animes. Me considero ordenada y una persona activa que está siempre dispuesta a aprender.
 
 #### Fotografia
-
+![Fotografía Isabella](https://github.com/Intro-CompuMovil/No-te-pases/assets/141599762/c2a03d33-cf17-468f-8d44-fb61d9127a56)
 
 ### Lina Salamanca
 - 
