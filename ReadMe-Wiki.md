@@ -15,9 +15,10 @@
 ![Fotografía Isabella](https://github.com/Intro-CompuMovil/No-te-pases/assets/141599762/c2a03d33-cf17-468f-8d44-fb61d9127a56)
 
 ### Lina Salamanca
-- 
+- Estudiante de sexto semestre de Ingeniería de Sistemas. Tengo 19 años. Me gusta conocer lugares, personas y cosas nuevas, disfruto escuchar música, ver series y escuchar a las personas. Soy una persona responsable y considero que me adapto fácil a los cambios. Me gusta sentir que tengo las cosas bajo control.
 
 #### Fotografia
+![l](https://github.com/Intro-CompuMovil/No-te-pases/assets/118871999/3df56963-c4cd-432c-bed9-12c01eb02e31)
 
 
 ## Diagrama Casos de Uso
@@ -50,4 +51,14 @@
 
 ### Programar alerta
 ![Pantalla Establecer Alarma](https://github.com/Intro-CompuMovil/No-te-pases/assets/141599762/6936122e-b088-4450-b864-13c9d200387e)
+
+### Mostrar mapa
+![ver mapa](https://github.com/Intro-CompuMovil/No-te-pases/assets/118871999/a7d37626-7dfd-4752-87cb-3ba46308b5d7)
+
+### Ver próximas paradas
+![próximas paradas](https://github.com/Intro-CompuMovil/No-te-pases/assets/118871999/e3b171b1-cef6-4f94-99fd-59c8134eb661)
+
+### Pagar pasaje
+![Pagar Pasaje](https://github.com/Intro-CompuMovil/No-te-pases/assets/118871999/a250ab22-fa34-4624-b522-39aaad46d263)
+
 
