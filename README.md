@@ -53,3 +53,4 @@
 
 4. **Sensor de luz:**
    - Utilizada para poder seleccionar de manera dinamica el colorde la aplicacion
+
