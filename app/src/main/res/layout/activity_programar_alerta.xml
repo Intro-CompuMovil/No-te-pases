@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProgramarAlerta">
+
+    <RelativeLayout
+        android:id="@+id/navegacion"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/barraNavegacion"
+        android:padding="10dp">
+
+        <ImageButton
+            android:id="@+id/imageMenu"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/menuicono"
+            />
+
+        <ImageView
+            android:id="@+id/imageLogo"
+            android:layout_width="60dp"
+            android:layout_height="70dp"
+            android:src="@drawable/logoicono"
+            android:layout_centerInParent="true"/>
+
+        <ImageView
+            android:id="@+id/imageBus"
+            android:layout_width="60dp"
+            android:layout_height="70dp"
+            android:src="@drawable/autobusicono"
+            android:layout_alignParentRight="true"
+            />
+
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/logoAlerta"
+        android:layout_width="60dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="20dp"/>
+
+    <TextView
+        android:id="@+id/programarAlerta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/logoAlerta"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="77dp"
+        android:fontFamily="@font/originregular"
+        android:text="Programar Alerta"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_below="@+id/navegacion"
+        android:layout_marginTop="25dp"/>
+
+    <TextView
+        android:id="@+id/textParadero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:text="Paradero seleccionado"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@color/Subrayado"
+        android:layout_below="@+id/programarAlerta"/>
+
+    <TextView
+        android:id="@+id/textParaderoSeleccionado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:text="Calle 45"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:layout_below="@+id/textParadero"/>
+
+    <TextView
+        android:id="@+id/textParaderoAlarma"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:text="Paradero donde sonará la alarma"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@color/Subrayado"
+        android:layout_below="@+id/textParaderoSeleccionado"/>
+
+    <TextView
+        android:id="@+id/paraderoAlarma"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:text="Calle 45"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:layout_below="@+id/textParaderoAlarma"/>
+
+</RelativeLayout>
