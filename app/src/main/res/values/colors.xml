@@ -4,4 +4,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#A1A1A1</color>
     <color name="red">#FF0C0C</color>
+    <color name="barraNavegacion">#E6A4B4</color>
+    <color name="Subrayado">#E3325D</color>
 </resources>
