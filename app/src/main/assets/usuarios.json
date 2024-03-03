@@ -1,0 +1,10 @@
+{
+  "usuarios":[
+    {"usuario": "Isabella", "contraseña": "123abc","tipo": "pasajero", "saldo": 30000},
+    {"usuario": "Lina", "contraseña": "456def","tipo": "pasajero", "saldo": 0},
+    {"usuario": "Santiago", "contraseña": "789ghi","tipo": "pasajero", "saldo": 10000},
+    {"usuario": "Pedrito", "contraseña": "012jkl","tipo": "conductor", "saldo": 0},
+    {"usuario": "Lucia", "contraseña": "345mnñ","tipo": "conductor", "saldo": 0},
+    {"usuario": "Carlitos", "contraseña": "678opq","tipo": "conductor", "saldo": 0}
+  ]
+}
