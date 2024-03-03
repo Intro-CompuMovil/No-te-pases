@@ -116,7 +116,7 @@
         android:layout_centerHorizontal="true"/>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonRegistro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Registrarse"
@@ -132,12 +132,12 @@
         android:layout_height="wrap_content"
         android:text="¿Ya tienes cuenta? "
         android:textSize="9sp"
-        android:layout_below="@+id/button"
+        android:layout_below="@+id/buttonRegistro"
         android:layout_centerHorizontal="true"
 
         />
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/ingresar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Inicia sesión "
