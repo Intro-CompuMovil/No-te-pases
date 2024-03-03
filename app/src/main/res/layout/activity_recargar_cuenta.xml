@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RecargarCuenta">
+
+    <RelativeLayout
+        android:id="@+id/navegacionRecarga"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/barraNavegacion"
+        android:padding="10dp">
+
+        <ImageButton
+            android:id="@+id/imageMenu"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/menuicono"
+            android:scaleType="fitCenter"
+            />
+
+        <ImageView
+            android:id="@+id/imageLogo"
+            android:layout_width="60dp"
+            android:layout_height="70dp"
+            android:src="@drawable/logoicono"
+            android:layout_centerInParent="true"/>
+
+        <ImageView
+            android:id="@+id/imageBus"
+            android:layout_width="60dp"
+            android:layout_height="70dp"
+            android:src="@drawable/autobusicono"
+            android:layout_alignParentRight="true"
+            />
+
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iconoRecargaCuenta"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/recargacuenta"
+        android:layout_above="@+id/textRecargaCuenta"
+        android:layout_centerHorizontal="true"/>
+    <TextView
+        android:id="@+id/textRecargaCuenta"
+        android:text="Recargar Cuenta"
+        android:textSize="40sp"
+        android:textAlignment="center"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/textSaldo"
+        android:fontFamily="@font/originregular"/>
+    <TextView
+        android:paddingTop="10dp"
+        android:id="@+id/textSaldo"
+        android:text="Saldo Actual:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
+    <EditText
+        android:id="@+id/saldoRecarga"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textSaldo"
+        android:layout_centerHorizontal="true"
+        android:hint="Monto a Recargar"/>
+
+    <ImageButton
+        android:id="@+id/botonDecremento"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:paddingLeft="15dp"
+        android:layout_below="@+id/saldoRecarga"
+        android:layout_marginStart="100dp"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/resta"
+        android:scaleType="fitCenter"/>
+
+    <ImageButton
+        android:id="@+id/botonIncremento"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:paddingRight="15dp"
+        android:layout_below="@+id/saldoRecarga"
+        android:layout_marginEnd="100dp"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/suma"
+        android:scaleType="fitCenter"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Aceptar"
+        android:backgroundTint="@color/barraNavegacion"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/botonIncremento"/>
+
+
+
+</RelativeLayout>
