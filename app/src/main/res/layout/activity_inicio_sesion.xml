@@ -80,6 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/contraseña"
         android:layout_centerHorizontal="true"
+        android:backgroundTint="@color/barraNavegacion"
         android:text="Ingresar!" />
 
     <TextView
