@@ -1,7 +1,31 @@
 {
   "buses":[
-    {"bus": "D81", "cantidadP": 23,"cantidadMaxP": 80, "paradas": [{"parada": "K7 #40"},{"parada": "K7 #45"},{"parada": "K7 #51"},{"parada": "K7 #56"}]},
-    {"bus": "C123", "cantidadP": 10,"cantidadMaxP": 60, "paradas": [{"parada": "K68 #24"},{"parada": "K68 #27"},{"parada": "K68 #33"},{"parada": "K68 #37"}]},
-    {"bus": "K332", "cantidadP": 5,"cantidadMaxP": 60, "paradas": [{"parada": "Cl45 #30"},{"parada": "Cl45 #24"},{"parada": "Cl45 #20"},{"parada": "Cl45 #14"}]}
+    {"nombreBus": "D81",
+      "cantidadMaxP": 80,
+      "busesActuales": [{"ID": 1, "cantidadP": 23},
+        {"ID": 2, "cantidadP": 50},
+        {"ID": 3, "cantidadP": 80}],
+      "paradas": [{"parada": "K7 #40"},
+        {"parada": "K7 #45"},
+        {"parada": "K7 #51"},
+        {"parada": "K7 #56"}]},
+    {"nombreBus": "C123",
+      "cantidadMaxP": 60,
+      "busesActuales": [{"ID": 1, "cantidadP": 30},
+        {"ID": 2, "cantidadP": 3},
+        {"ID": 3, "cantidadP": 59}],
+       "paradas": [{"parada": "K68 #24"},
+         {"parada": "K68 #27"},
+         {"parada": "K68 #33"},
+         {"parada": "K68 #37"}]},
+    {"nombreBus": "K332",
+      "cantidadMaxP": 60,
+      "busesActuales": [{"ID": 1, "cantidadP": 18},
+        {"ID": 2, "cantidadP": 11},
+        {"ID": 3, "cantidadP": 3}],
+      "paradas": [{"parada": "Cl45 #30"},
+        {"parada": "Cl45 #24"},
+        {"parada": "Cl45 #20"},
+        {"parada": "Cl45 #14"}]}
   ]
 }

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EscanearQR">
+
+    <RelativeLayout
+        android:id="@+id/navegacion"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/barraNavegacion"
+        android:padding="10dp">
+
+        <ImageButton
+            android:id="@+id/imageMenu"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/menuicono"
+            android:scaleType="fitCenter"
+            />
+
+        <ImageView
+            android:id="@+id/imageLogo"
+            android:layout_width="60dp"
+            android:layout_height="70dp"
+            android:src="@drawable/logoicono"
+            android:layout_centerInParent="true"/>
+
+        <ImageView
+            android:id="@+id/imageBus"
+            android:layout_width="60dp"
+            android:layout_height="70dp"
+            android:src="@drawable/autobusicono"
+            android:layout_alignParentRight="true"
+            />
+
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iconoEscanearQR"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/iconoescanear"
+        android:layout_above="@+id/textEscanearQR"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/textEscanearQR"
+        android:text="Escanear QR"
+        android:textSize="40sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:fontFamily="@font/originregular"/>
+    <Button
+        android:id="@+id/buttonIngresar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textEscanearQR"
+        android:layout_centerHorizontal="true"
+        android:backgroundTint="@color/barraNavegacion"
+        android:layout_marginTop="20dp"
+        android:text="Leer QR" />
+
+</RelativeLayout>
