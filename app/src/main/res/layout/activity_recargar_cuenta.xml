@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".InicioSesion">
+    tools:context=".RecargarCuenta">
 
     <RelativeLayout
-        android:id="@+id/navegacion"
+        android:id="@+id/navegacionRecarga"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/barraNavegacion"
@@ -40,64 +40,67 @@
     </RelativeLayout>
 
     <ImageView
-        android:id="@+id/iconoInicioSesion"
+        android:id="@+id/iconoRecargaCuenta"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/iniciosesion"
-        android:layout_above="@+id/textInicioSesion"
+        android:src="@drawable/recargacuenta"
+        android:layout_above="@+id/textRecargaCuenta"
         android:layout_centerHorizontal="true"/>
-
     <TextView
-        android:id="@+id/textInicioSesion"
-        android:text="Iniciar Sesión"
+        android:id="@+id/textRecargaCuenta"
+        android:text="Recargar Cuenta"
         android:textSize="40sp"
-        android:layout_width="wrap_content"
+        android:textAlignment="center"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/textSaldo"
         android:fontFamily="@font/originregular"/>
-
+    <TextView
+        android:paddingTop="10dp"
+        android:id="@+id/textSaldo"
+        android:text="Saldo Actual:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
     <EditText
-        android:id="@+id/usuario"
+        android:id="@+id/saldoRecarga"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textInicioSesion"
+        android:layout_below="@+id/textSaldo"
         android:layout_centerHorizontal="true"
-        android:hint="Ingresa tu usuario"/>
+        android:hint="Monto a Recargar"/>
 
-    <EditText
-        android:id="@+id/contraseña"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/usuario"
-        android:layout_centerHorizontal="true"
-        android:hint="Ingresa tu contraseña"
-        android:ems="10"
-        android:inputType="textPassword" />
+    <ImageButton
+        android:id="@+id/botonDecremento"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:paddingLeft="15dp"
+        android:layout_below="@+id/saldoRecarga"
+        android:layout_marginStart="100dp"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/resta"
+        android:scaleType="fitCenter"/>
 
+    <ImageButton
+        android:id="@+id/botonIncremento"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:paddingRight="15dp"
+        android:layout_below="@+id/saldoRecarga"
+        android:layout_marginEnd="100dp"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/suma"
+        android:scaleType="fitCenter"/>
     <Button
-        android:id="@+id/buttonIngresar"
+        android:id="@+id/botonGuardarRecarga"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/contraseña"
+        android:text="Aceptar"
+        android:backgroundTint="@color/barraNavegacion"
         android:layout_centerHorizontal="true"
-        android:text="Ingresar!" />
+        android:layout_below="@+id/botonIncremento"/>
 
-    <TextView
-        android:id="@+id/textoRegistro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonIngresar"
-        android:layout_centerHorizontal="true"
-        android:text="No estás isncrito?"/>
-
-    <TextView
-        android:id="@+id/textoLinkRegistro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textoRegistro"
-        android:layout_centerHorizontal="true"
-        android:text="Registrate"
-        android:textColor="@color/Subrayado"/>
 
 
 </RelativeLayout>
