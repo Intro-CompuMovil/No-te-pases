@@ -1,7 +1,7 @@
 {
   "buses":[
-    {"bus": "D81", "cantidadP": 23,"cantidadM": 80, "paradas": [{"parada": "K7 #40"},{"parada": "K7 #45"},{"parada": "K7 #51"},{"parada": "K7 #56"}]},
-    {"bus": "C123", "cantidadP": 10,"cantidadM": 60, "paradas": [{"parada": "K68 #24"},{"parada": "K68 #27"},{"parada": "K68 #33"},{"parada": "K68 #37"}]},
-    {"bus": "K332", "cantidadP": 5,"cantidadM": 60, "paradas": [{"parada": "Cl45 #30"},{"parada": "Cl45 #24"},{"parada": "Cl45 #20"},{"parada": "Cl45 #14"}]}
+    {"bus": "D81", "cantidadP": 23,"cantidadMaxP": 80, "paradas": [{"parada": "K7 #40"},{"parada": "K7 #45"},{"parada": "K7 #51"},{"parada": "K7 #56"}]},
+    {"bus": "C123", "cantidadP": 10,"cantidadMaxP": 60, "paradas": [{"parada": "K68 #24"},{"parada": "K68 #27"},{"parada": "K68 #33"},{"parada": "K68 #37"}]},
+    {"bus": "K332", "cantidadP": 5,"cantidadMaxP": 60, "paradas": [{"parada": "Cl45 #30"},{"parada": "Cl45 #24"},{"parada": "Cl45 #20"},{"parada": "Cl45 #14"}]}
   ]
 }
