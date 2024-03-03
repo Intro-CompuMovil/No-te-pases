@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InformacionBus">
+
+    <RelativeLayout
+        android:id="@+id/navegacionInfoBus"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/barraNavegacion"
+        android:padding="10dp">
+
+        <ImageButton
+            android:id="@+id/imageMenu"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/menuicono"
+            android:scaleType="fitCenter"
+            />
+
+        <ImageView
+            android:id="@+id/imageLogo"
+            android:layout_width="60dp"
+            android:layout_height="70dp"
+            android:src="@drawable/logoicono"
+            android:layout_centerInParent="true"/>
+
+        <ImageView
+            android:id="@+id/imageBus"
+            android:layout_width="60dp"
+            android:layout_height="70dp"
+            android:src="@drawable/autobusicono"
+            android:layout_alignParentRight="true"
+            />
+
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iconoBus"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/iconobus"
+        android:layout_below="@+id/navegacionInfoBus"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="70dp"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/textInfoBus"
+        android:text="Información Bus"
+        android:textSize="30sp"
+        android:textAlignment="center"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/navegacionInfoBus"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="75dp"
+        android:fontFamily="@font/originregular"/>
+
+    <TextView
+        android:id="@+id/textCantPasajeros"
+        android:text="Cantidad Pasajeros"
+        android:textSize="20sp"
+        android:textColor="@color/Subrayado"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textInfoBus"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="100dp"/>
+
+    <TextView
+        android:id="@+id/numPasajeros"
+        android:textSize="20sp"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textInfoBus"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="100dp"/>
+
+    <TextView
+        android:id="@+id/textDistancia"
+        android:text="Distancia a la que se encuentra"
+        android:textSize="20sp"
+        android:textColor="@color/Subrayado"
+        android:layout_width="105dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textCantPasajeros"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="75dp"/>
+
+    <TextView
+        android:id="@+id/kmDistancia"
+        android:textSize="20sp"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/numPasajeros"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="110dp"/>
+
+
+
+
+</RelativeLayout>
