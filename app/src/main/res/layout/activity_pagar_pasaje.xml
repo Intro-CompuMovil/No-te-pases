@@ -45,7 +45,7 @@
       android:id="@+id/iconoPagarPasaje"
       android:layout_width="100dp"
       android:layout_height="100dp"
-      android:src="@drawable/recargacuenta"
+      android:src="@drawable/iconopagar"
       android:layout_below="@+id/navegacion"
       android:layout_centerHorizontal="true"
       android:layout_marginTop="80dp"/>
