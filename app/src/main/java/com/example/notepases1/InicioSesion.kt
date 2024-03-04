@@ -28,7 +28,7 @@ class InicioSesion : AppCompatActivity() {
 
         ingreso.setOnClickListener{
             if(validarCuenta(usuario, contraseña)){
-                val intentMenu = Intent(this, EscanearQR::class.java)
+                val intentMenu = Intent(this, Menu::class.java)
                 startActivity(intentMenu)
             }
         }
