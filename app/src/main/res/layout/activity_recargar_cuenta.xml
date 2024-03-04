@@ -56,13 +56,15 @@
         android:layout_centerHorizontal="true"
         android:layout_above="@id/textSaldo"
         android:fontFamily="@font/originregular"/>
+
     <TextView
-        android:paddingTop="10dp"
         android:id="@+id/textSaldo"
-        android:text="Saldo Actual:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:paddingTop="10dp"
+        android:text="Saldo Actual:"
+        android:textColor="@color/Subrayado"/>
     <EditText
         android:id="@+id/saldoRecarga"
         android:layout_width="200dp"

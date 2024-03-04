@@ -43,11 +43,11 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="160dp"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:src = "@drawable/iconobus" />
 
     <TextView
         android:id="@+id/signUp"

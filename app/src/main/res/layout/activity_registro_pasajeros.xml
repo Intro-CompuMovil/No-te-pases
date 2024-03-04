@@ -23,8 +23,8 @@
 
         <ImageView
             android:id="@+id/imageLogo"
-            android:layout_width="60dp"
-            android:layout_height="70dp"
+            android:layout_width="70dp"
+            android:layout_height="80dp"
             android:src="@drawable/logoicono"
             android:layout_centerInParent="true"/>
 
@@ -38,5 +38,80 @@
 
 
     </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="160dp"
+        tools:src = "@drawable/pasajerosabordo" />
+
+    <TextView
+        android:id="@+id/textPasajeros"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageView2"
+        android:layout_centerInParent="true"
+        android:fontFamily="@font/originregular"
+        android:text="Pasajeros A Bordo"
+        android:textSize="35sp"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/textPasajerosIngresados"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/textPasajeros"
+        android:layout_marginTop="50dp"
+        android:text="Saldo Actual:"
+        android:textColor="@color/Subrayado"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/numPasajeros"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textPasajerosIngresados"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="20dp"
+        android:text="# 25"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <ImageButton
+        android:id="@+id/botonDescontarPasajero"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:paddingLeft="15dp"
+        android:layout_below="@+id/numPasajeros"
+        android:layout_marginStart="100dp"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/resta"
+        android:scaleType="fitCenter"
+        android:layout_marginTop="30dp"/>
+
+    <ImageButton
+        android:id="@+id/botonContarPasajero"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:paddingRight="15dp"
+        android:layout_below="@+id/numPasajeros"
+        android:layout_marginEnd="100dp"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/suma"
+        android:scaleType="fitCenter"
+        android:layout_marginTop="30dp"/>
+
+    <Button
+        android:id="@+id/botonAceptar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Aceptar"
+        android:backgroundTint="@color/barraNavegacion"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/botonContarPasajero"
+        android:layout_marginTop="40dp"/>
 
 </RelativeLayout>

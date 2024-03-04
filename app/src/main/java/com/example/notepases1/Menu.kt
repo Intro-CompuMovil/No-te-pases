@@ -22,9 +22,10 @@ class Menu : AppCompatActivity() {
             val intentQR = Intent(this, EscanearQR::class.java)
             startActivity(intentQR)
         }
-       /* textNumPasajeros.setOnClickListener {
-            val intentNumPasajeros = Intent(this, )
-        }*/
+        textNumPasajeros.setOnClickListener {
+            val intentNumPasajeros = Intent(this, RegistroPasajeros::class.java)
+            startActivity(intentNumPasajeros)
+        }
 
     }
 }
