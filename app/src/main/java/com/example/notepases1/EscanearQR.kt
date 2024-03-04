@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -90,34 +91,45 @@ class EscanearQR : AppCompatActivity() {
     }
 
     fun camaraActiva(){
-        val intCamara = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        //val intCamara = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         try{
             //startActivityForResult(intCamara, REQUEST_IMAGE_CAPTURE)
-            IntentIntegrator(this).initiateScan()
+            val intCamara = IntentIntegrator(this)
+            intCamara.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
+            intCamara.setCameraId(0)
+            intCamara.setBeepEnabled(false)
+            intCamara.setBarcodeImageEnabled(false)
+            intCamara.initiateScan()
         }catch (e: ActivityNotFoundException){
             e.message?.let { Log.e("PERMISO_CAMARA",it)}
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        //super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            //val imageBitmap = data?.extras?.get("data") as? Bitmap
-            val imagen = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-            if (imagen != null){
-                if(imagen.contents == null){
-                    Log.i("IMAGEN","Vainas raras")
-                }else{
-                    Toast.makeText(this,"El valor es: "+imagen.contents,Toast.LENGTH_SHORT).show()
-                    Log.i("IMAGEN", "Se logro")
-                }
-            }else{
-                super.onActivityResult(requestCode, resultCode, data)
-                Log.i("IMAGEN", "Faiamos")
+        /*super.onActivityResult(requestCode, resultCode, data)
+        val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        if (result != null) {
+            if (result.contents == null) {
+                val textoAyuda = findViewById<TextView>(R.id.resultado)
+                textoAyuda.text = "cancelado"
+            } else {
+                // Si el usuario escaneó correctamente un código QR
+                val textoAyuda = findViewById<TextView>(R.id.resultado)
+                textoAyuda.text = result.contents
             }
-            Log.i("IMAGEN","Re hiper mega morimos")
+        } else {
+            val textoAyuda = findViewById<TextView>(R.id.resultado)
+            textoAyuda.text = "faiamos"
+        }*/
+        super.onActivityResult(requestCode, resultCode, data)
+        val result =IntentIntegrator.parseActivityResult(requestCode,resultCode,data)
+        if(result!=null && result.contents!=null){
+            val textoAyuda = findViewById<TextView>(R.id.resultado)
+            textoAyuda.text = result.contents
+        }else{
+            val textoAyuda = findViewById<TextView>(R.id.resultado)
+            textoAyuda.text = "Faiamos"
         }
-
     }
 
     fun decodificarQRcode(bitmap: Bitmap?){
@@ -125,6 +137,7 @@ class EscanearQR : AppCompatActivity() {
     }
     companion object {
         private const val REQUEST_IMAGE_CAPTURE = 123
+        private const val REQUEST_QR_CODE = 100
     }
 }
 

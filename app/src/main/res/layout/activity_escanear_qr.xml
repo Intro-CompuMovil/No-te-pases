@@ -64,5 +64,14 @@
         android:backgroundTint="@color/barraNavegacion"
         android:layout_marginTop="20dp"
         android:text="Leer QR" />
+    <TextView
+        android:id="@+id/resultado"
+        android:text=""
+        android:textSize="0sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/buttonLeerQR"
+        android:fontFamily="@font/originregular"/>
 
 </RelativeLayout>
