@@ -12,15 +12,16 @@ class InformacionBus : AppCompatActivity() {
         val cantPasajeros = findViewById<TextView>(R.id.numPasajeros)
         val distanciaParadero = findViewById<TextView>(R.id.kmDistancia)
 
-        //Verificar con Santiago cómo me va a pasar la información de los buses
-        val informacionBundle = intent.getBundleExtra("infoCategoria")
-        val informacionIntent = intent.getStringExtra("info")
-        val categoria = informacionBundle?.getString("categoria")
+        //Intents y Bundles para próximas entregas
+        /*val informacionBundle = intent.getBundleExtra("infoBus")
+        val categoria = informacionBundle?.getString("cantPersonas")*/
 
-        //calcular la cantidad de pasajeros
-        //cantPasajeros.text =
+        val numerosPesonas = 1 .. 80
+        val dato1 = numerosPesonas.random()
+        cantPasajeros.text = "${(dato1).toString()}/80"
 
-        //asignar la distancia
-        //distanciaParadero.text =
+        val numerosKm = 1 .. 5
+        val dato2 = numerosKm.random()
+        distanciaParadero.text = "${(dato2).toString()} km"
     }
 }
