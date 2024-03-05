@@ -7,6 +7,11 @@
 - Lina Salamanca
 - Santiago Castro
 
+## Documentacion Entregas
+- Entrega 1 - (ReadMe-Entrega1.md)
+- Entrega 2 - ()
+- Entrega 3 - ()
+
 ## Descripción del Proyecto
 
 "No te pases" es una aplicación innovadora enfocada en mejorar la experiencia de los usuarios del sistema de transporte público Transmilenio, específicamente en la gestión y comodidad durante el viaje. La aplicación permite a los usuarios realizar un seguimiento de las paradas, facilitando la notificación de la parada deseada, así como realizar funciones de inicio de sesión, creación de cuenta, recarga y pago del servicio mediante tarjeta. Además, integra un lector de códigos QR para visualizar la cantidad de usuarios en el bus y los buses que paran en la estación al escanear el código QR correspondiente.
