@@ -12,7 +12,7 @@ class Menu : AppCompatActivity() {
 
         val textRecargar = findViewById<TextView>(R.id.textRecargar)
         val textQR = findViewById<TextView>(R.id.textQR)
-        val textNumPasajeros = findViewById<TextView>(R.id.textNumPasajeros)
+
 
         textRecargar.setOnClickListener{
             val intentRecargar = Intent(this, RecargarCuenta::class.java)
@@ -22,10 +22,5 @@ class Menu : AppCompatActivity() {
             val intentQR = Intent(this, EscanearQR::class.java)
             startActivity(intentQR)
         }
-        textNumPasajeros.setOnClickListener {
-            val intentNumPasajeros = Intent(this, RegistroPasajeros::class.java)
-            startActivity(intentNumPasajeros)
-        }
-
     }
 }

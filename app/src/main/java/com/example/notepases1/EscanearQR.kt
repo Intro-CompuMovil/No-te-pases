@@ -41,6 +41,7 @@ class EscanearQR : AppCompatActivity() {
         val botonQR = vistaBindingQR.buttonLeerQR
         val botonEstacion = vistaBindingQR.buttonEstacion
         val botonBus = vistaBindingQR.buttonBus
+        val botonPagar = vistaBindingQR.buttonPagar
 
         // Request camera permissions
         if (allPermissionsGranted()) {
@@ -64,6 +65,11 @@ class EscanearQR : AppCompatActivity() {
         botonEstacion.setOnClickListener {
             val intentMapa = Intent(this, Mapa::class.java)
             startActivity(intentMapa)
+        }
+
+        botonPagar.setOnClickListener {
+            val intentPagarPasaje = Intent(this, PagarPasaje::class.java)
+            startActivity(intentPagarPasaje)
         }
     }
 

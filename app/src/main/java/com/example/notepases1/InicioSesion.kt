@@ -28,8 +28,16 @@ class InicioSesion : AppCompatActivity() {
 
         ingreso.setOnClickListener{
             if(validarCuenta(usuario, contraseña)){
-                val intentMenu = Intent(this, Menu::class.java)
-                startActivity(intentMenu)
+                if (datosUsuario?.getString("tipo") == "pasajero")
+                {
+                    val intentMenu = Intent(this, Menu::class.java)
+                    startActivity(intentMenu)
+                }
+                else if (datosUsuario?.getString("tipo") == "conductor")
+                {
+                    val intentMenuConductor = Intent(this, MenuConductor::class.java)
+                    startActivity(intentMenuConductor)
+                }
             }
         }
 

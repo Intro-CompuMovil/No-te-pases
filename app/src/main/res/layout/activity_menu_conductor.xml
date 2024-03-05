@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Menu">
+    tools:context=".MenuConductor">
 
     <RelativeLayout
         android:id="@+id/navegacion"
@@ -59,50 +59,27 @@
         android:layout_below="@id/iconoPagarPasaje"
         android:fontFamily="@font/originregular"/>
 
+
+
     <ImageView
-        android:id="@+id/iconoRecargar"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@drawable/recargacuenta"
+        android:id="@+id/iconoNumPasajeros"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/pasajerosabordo"
         android:layout_below="@+id/textPagarPasaje"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="80dp"/>
+        android:layout_marginTop="100dp"/>
 
     <TextView
-        android:id="@+id/textRecargar"
-        android:text="Recargar Saldo"
-        android:textSize="28dp"
+        android:id="@+id/textNumPasajeros"
+        android:text="Registrar Número de Pasajeros"
+        android:textSize="25dp"
         android:textAlignment="center"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/textPagarPasaje"
         android:fontFamily="@font/originregular"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="100dp"
         android:layout_marginLeft="110dp"/>
-
-    <ImageView
-        android:id="@+id/iconoQR"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/iconoqr"
-        android:layout_below="@+id/iconoRecargar"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="65dp"/>
-
-    <TextView
-        android:id="@+id/textQR"
-        android:text="Escanear QR"
-        android:textSize="28dp"
-        android:textAlignment="center"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textRecargar"
-        android:fontFamily="@font/originregular"
-        android:layout_marginTop="80dp"
-        android:layout_marginLeft="110dp"/>
-
-
-
-
 
 </RelativeLayout>

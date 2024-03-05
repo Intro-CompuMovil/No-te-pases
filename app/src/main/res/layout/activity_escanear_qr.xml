@@ -93,4 +93,14 @@
         android:layout_marginEnd="90dp"
         android:layout_alignParentEnd="true"/>
 
+    <Button
+        android:id="@+id/buttonPagar"
+        android:text="QR Pagar Pasaje"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/barraNavegacion"
+        android:layout_below="@+id/buttonBus"
+        android:layout_marginEnd="90dp"
+        android:layout_centerHorizontal="true"/>
+
 </RelativeLayout>

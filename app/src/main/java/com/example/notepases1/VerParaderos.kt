@@ -33,7 +33,9 @@ class VerParaderos : AppCompatActivity() {
         //val busSeleccionado = bundle?.getString("bus")
 
         //if (busSeleccionado != null) {
+            bus.setText("D81")
             leerParadas("D81",listaParadas)
+
         //}
 
         listaParadas.setOnItemClickListener(object : AdapterView.OnItemClickListener {
@@ -59,7 +61,7 @@ class VerParaderos : AppCompatActivity() {
 
             for (i in 0 until busesArray.length()) {
                 val bus = busesArray.getJSONObject(i)
-                if (bus.getString("bus") == busSeleccionado) {
+                if (bus.getString("nombreBus") == busSeleccionado) {
                     val paradasArray = bus.getJSONArray("paradas")
                     for (j in 0 until paradasArray.length()) {
                         val parada = paradasArray.getJSONObject(j)

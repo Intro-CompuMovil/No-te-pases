@@ -17,10 +17,23 @@ class RegistroPasajeros : AppCompatActivity() {
         val BTNContarPasajero = findViewById<ImageButton>(R.id.botonContarPasajero)
         val BTNDescontarPasajero = findViewById<ImageButton>(R.id.botonDescontarPasajero)
         val BTNAceptar = findViewById<Button>(R.id.botonAceptar)
-
+        var contadorPasajeros = 0
         menu.setOnClickListener {
             val intentMenu = Intent(this, Menu:: class.java)
             startActivity(intentMenu)
+        }
+
+        BTNContarPasajero.setOnClickListener {
+            contadorPasajeros += 1
+            numPasajeros.text = contadorPasajeros.toString()
+        }
+
+        BTNDescontarPasajero.setOnClickListener {
+            if(contadorPasajeros>0)
+            {
+                contadorPasajeros -= 1
+                numPasajeros.text = contadorPasajeros.toString()
+            }
         }
     }
 }
