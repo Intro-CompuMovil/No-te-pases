@@ -22,6 +22,13 @@ class Mapa : AppCompatActivity() {
             startActivity(intentBus1)
         }
 
-
+        bus2.setOnClickListener {
+            val intentBus2 = Intent(this, InformacionBus::class.java)
+            val bundleBus2 = Bundle()
+            bundleBus2.putString("id","2")
+            bundleBus2.putString("cantidadP","3")
+            intentBus2.putExtra("info",bundleBus2)
+            startActivity(intentBus2)
+        }
     }
 }
