@@ -1,143 +1,175 @@
 package com.example.notepases1
 
-import android.content.ActivityNotFoundException
+import android.Manifest
+import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import androidx.appcompat.app.AppCompatActivity
+import android.icu.text.SimpleDateFormat
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.camera.core.ImageCapture
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.google.zxing.integration.android.IntentIntegrator
-import kotlin.math.log
-import androidx.activity.result.contract.ActivityResultContracts
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
+import android.widget.Toast
+import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.core.Preview
+import androidx.camera.core.CameraSelector
+import android.util.Log
+import androidx.camera.core.ImageCaptureException
+import com.example.notepases1.databinding.ActivityEscanearQrBinding
+import java.util.Locale
 
 class EscanearQR : AppCompatActivity() {
 
-    /*private val lectorLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-        result ->
-        if(result.resultCode == RESULT_OK){
-            val contenido = result.data?.getStringExtra()
-        }
-    }*/
+    //Código tomado y modificado del curso de Android Studio
+    //https://developer.android.com/codelabs/camerax-getting-started?hl=es-419#0
+    private lateinit var vistaBindingQR: ActivityEscanearQrBinding
+
+    private var capturarImagen: ImageCapture? = null
+
+    private lateinit var cameraExecutor: ExecutorService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_escanear_qr)
+        vistaBindingQR = ActivityEscanearQrBinding.inflate(layoutInflater)
+        setContentView(vistaBindingQR.root)
 
-        val botonCamara = findViewById<Button>(R.id.buttonLeerQR)
-        Log.i("PAPITAS","papitaaaaaaaaaaaas")
+        val botonQR = vistaBindingQR.buttonLeerQR
+        val botonEstacion = vistaBindingQR.buttonEstacion
+        val botonBus = vistaBindingQR.buttonBus
 
-        botonCamara.setOnClickListener {
-            when {
-                ContextCompat.checkSelfPermission(
-                    this, android.Manifest.permission.CAMERA
-                ) == PackageManager.PERMISSION_GRANTED -> {
-                    camaraActiva()
-                }
+        // Request camera permissions
+        if (allPermissionsGranted()) {
+            vistaPrevia()
+        } else {
+            ActivityCompat.requestPermissions(
+                this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
+        }
 
-                ActivityCompat.shouldShowRequestPermissionRationale(
-                    this, android.Manifest.permission.CAMERA
-                ) -> {
-                    Toast.makeText(
-                        this,
-                        "Activa cámara para poder usar más funciones en nuestra app",
-                        Toast.LENGTH_SHORT
-                    )
-                }
-                else -> {
-                    permisoCamara()
-                }
-            }
+        botonQR.setOnClickListener { tomarFotico() }
+
+        cameraExecutor = Executors.newSingleThreadExecutor()
+
+        botonBus.setOnClickListener {
+            val intentBus = Intent(this, VerParaderos::class.java)
+            val bundleBus = Bundle()
+            bundleBus.putString("bus","D81")
+            startActivity(intentBus)
+        }
+
+        botonEstacion.setOnClickListener {
+            val intentMapa = Intent(this, Mapa::class.java)
+            startActivity(intentMapa)
         }
     }
 
-    private fun permisoCamara() {
-        ActivityCompat.requestPermissions(
-            this,
-            arrayOf(android.Manifest.permission.CAMERA),
-            Companion.REQUEST_IMAGE_CAPTURE
+    private fun tomarFotico() {
+        val capturarImagen = capturarImagen ?: return
+
+        val nombreImagen = SimpleDateFormat(FILENAME_FORMAT, Locale.US)
+            .format(System.currentTimeMillis())
+
+        val valorImagen = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, nombreImagen)
+            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+                put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/ProyectoNoTePases")
+            }
+        }
+
+        val resultadoImagenGaleria = ImageCapture.OutputFileOptions
+            .Builder(contentResolver,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                valorImagen)
+            .build()
+
+        capturarImagen.takePicture(
+            resultadoImagenGaleria,
+            ContextCompat.getMainExecutor(this),
+            object : ImageCapture.OnImageSavedCallback {
+                override fun onError(exc: ImageCaptureException) {
+                    Toast.makeText(baseContext,"No se pudo tomar la foto: ${exc.message})",Toast.LENGTH_SHORT).show()
+                }
+
+                override fun
+                        onImageSaved(output: ImageCapture.OutputFileResults){
+                    Toast.makeText(baseContext, "Captura de pantalla existosa: ${output.savedUri}", Toast.LENGTH_SHORT).show()
+                }
+            }
         )
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            Companion.REQUEST_IMAGE_CAPTURE -> {
-                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    // Permiso concedido
-                    // Puedes iniciar la actividad de la cámara aquí
-                    camaraActiva()
-                } else {
-                    // Permiso denegado
-                    // Puedes manejar el caso en el que el usuario deniega el permiso
+    private fun vistaPrevia() {
+        val provedorCamara = ProcessCameraProvider.getInstance(this)
+
+        provedorCamara.addListener({
+            val cameraProvider: ProcessCameraProvider = provedorCamara.get()
+
+            val preview = Preview.Builder()
+                .build()
+                .also {
+                    it.setSurfaceProvider(vistaBindingQR.vistaPrevia.surfaceProvider)
                 }
-                return
+
+            this.capturarImagen = ImageCapture.Builder().build()
+
+            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+
+            try {
+                cameraProvider.unbindAll()
+
+                cameraProvider.bindToLifecycle(
+                    this, cameraSelector, preview, capturarImagen)
+
+            } catch(exc: Exception) {
+                Log.e(TAG, "Use case binding failed", exc)
             }
 
-            else -> {
-                // Ignorar todas las demás solicitudes.
-            }
-        }
+        }, ContextCompat.getMainExecutor(this))
     }
 
-    fun camaraActiva(){
-        //val intCamara = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        try{
-            //startActivityForResult(intCamara, REQUEST_IMAGE_CAPTURE)
-            val intCamara = IntentIntegrator(this)
-            intCamara.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
-            intCamara.setCameraId(0)
-            intCamara.setBeepEnabled(false)
-            intCamara.setBarcodeImageEnabled(false)
-            intCamara.initiateScan()
-        }catch (e: ActivityNotFoundException){
-            e.message?.let { Log.e("PERMISO_CAMARA",it)}
-        }
+    private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
+        ContextCompat.checkSelfPermission(
+            baseContext, it) == PackageManager.PERMISSION_GRANTED
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        /*super.onActivityResult(requestCode, resultCode, data)
-        val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-        if (result != null) {
-            if (result.contents == null) {
-                val textoAyuda = findViewById<TextView>(R.id.resultado)
-                textoAyuda.text = "cancelado"
+    override fun onDestroy() {
+        super.onDestroy()
+        cameraExecutor.shutdown()
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int, permissions: Array<String>, grantResults:
+        IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_CODE_PERMISSIONS) {
+            if (allPermissionsGranted()) {
+                vistaPrevia()
             } else {
-                // Si el usuario escaneó correctamente un código QR
-                val textoAyuda = findViewById<TextView>(R.id.resultado)
-                textoAyuda.text = result.contents
+                Toast.makeText(this,
+                    "Permiso no otorgado por el usuario",
+                    Toast.LENGTH_SHORT).show()
+                finish()
             }
-        } else {
-            val textoAyuda = findViewById<TextView>(R.id.resultado)
-            textoAyuda.text = "faiamos"
-        }*/
-        super.onActivityResult(requestCode, resultCode, data)
-        val result =IntentIntegrator.parseActivityResult(requestCode,resultCode,data)
-        if(result!=null && result.contents!=null){
-            val textoAyuda = findViewById<TextView>(R.id.resultado)
-            textoAyuda.text = result.contents
-        }else{
-            val textoAyuda = findViewById<TextView>(R.id.resultado)
-            textoAyuda.text = "Faiamos"
         }
     }
 
-    fun decodificarQRcode(bitmap: Bitmap?){
-
-    }
     companion object {
-        private const val REQUEST_IMAGE_CAPTURE = 123
-        private const val REQUEST_QR_CODE = 100
+        private const val TAG = "CameraXApp"
+        private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
+        private const val REQUEST_CODE_PERMISSIONS = 10
+        private val REQUIRED_PERMISSIONS =
+            mutableListOf (
+                Manifest.permission.CAMERA
+            ).apply {
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+                    add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                }
+         }.toTypedArray()
     }
 }
 
