@@ -2,8 +2,8 @@
 
 ## Retos
 1. Leer y adquirir información de los códigos QR
-## Historias de Usuario
-
+2. 
+## Historias de Usuario (Estos son de ejemplo, no son los finales)
 ### Historia de Usuario 1: Inicio de Sesión y Navegación de Usuario
 Como pasajero de autobús,
 quiero poder iniciar sesión en la aplicación con mis credenciales,
