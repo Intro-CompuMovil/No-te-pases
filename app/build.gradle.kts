@@ -49,6 +49,7 @@ dependencies {
     implementation ("androidx.camera:camera-view:${camerax_version}")
     implementation ("androidx.camera:camera-extensions:${camerax_version}")
 
+    implementation ("org.osmdroid:osmdroid-android:6.1.14")
     implementation("com.github.bumptech.glide:glide:4.13.0")
     kapt("com.github.bumptech.glide:compiler:4.13.0")
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")
