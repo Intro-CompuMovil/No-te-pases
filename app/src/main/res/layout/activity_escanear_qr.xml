@@ -40,17 +40,32 @@
 
     </RelativeLayout>
 
-    <androidx.camera.view.PreviewView
-        android:id="@+id/vistaPrevia"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="60dp"/>
+    <FrameLayout
+        android:id="@+id/contenedorQR"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_centerInParent="true">
+
+        <androidx.camera.view.PreviewView
+            android:id="@+id/vistaPrevia"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_centerInParent="true"
+            />
+        <ImageView
+            android:id="@+id/imagenQR"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_centerInParent="true"
+            android:scaleType="centerCrop"/>
+
+    </FrameLayout>
+
 
     <ImageView
         android:id="@+id/iconoEscanearQR"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:src="@drawable/iconoescanear"
         android:layout_above="@+id/textEscanearQR"
         android:layout_centerHorizontal="true"/>
@@ -61,14 +76,15 @@
         android:textSize="40sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_above="@+id/contenedorQR"
+        android:layout_centerHorizontal="true"
         android:fontFamily="@font/originregular"/>
 
     <Button
         android:id="@+id/buttonLeerQR"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textEscanearQR"
+        android:layout_below="@+id/contenedorQR"
         android:layout_centerHorizontal="true"
         android:backgroundTint="@color/barraNavegacion"
         android:layout_marginTop="20dp"

@@ -19,7 +19,9 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.core.Preview
 import androidx.camera.core.CameraSelector
 import android.util.Log
+import android.widget.ImageView
 import androidx.camera.core.ImageCaptureException
+import com.bumptech.glide.Glide
 import com.example.notepases1.databinding.ActivityEscanearQrBinding
 import java.util.Locale
 
@@ -42,6 +44,7 @@ class EscanearQR : AppCompatActivity() {
         val botonEstacion = vistaBindingQR.buttonEstacion
         val botonBus = vistaBindingQR.buttonBus
         val botonPagar = vistaBindingQR.buttonPagar
+        val resultadoImagen =vistaBindingQR.imagenQR
 
         // Request camera permissions
         if (allPermissionsGranted()) {
@@ -51,7 +54,7 @@ class EscanearQR : AppCompatActivity() {
                 this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
         }
 
-        botonQR.setOnClickListener { tomarFotico() }
+        botonQR.setOnClickListener { tomarFotico(resultadoImagen) }
 
         cameraExecutor = Executors.newSingleThreadExecutor()
 
@@ -73,7 +76,7 @@ class EscanearQR : AppCompatActivity() {
         }
     }
 
-    private fun tomarFotico() {
+    private fun tomarFotico(resultadoImagen: ImageView) {
         val capturarImagen = capturarImagen ?: return
 
         val nombreImagen = SimpleDateFormat(FILENAME_FORMAT, Locale.US)
@@ -104,6 +107,7 @@ class EscanearQR : AppCompatActivity() {
                 override fun
                         onImageSaved(output: ImageCapture.OutputFileResults){
                     Toast.makeText(baseContext, "Captura de pantalla existosa: ${output.savedUri}", Toast.LENGTH_SHORT).show()
+                    Glide.with(this@EscanearQR).load(output.savedUri).into(resultadoImagen)
                 }
             }
         )
