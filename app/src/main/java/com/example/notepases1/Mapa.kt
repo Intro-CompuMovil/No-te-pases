@@ -25,21 +25,21 @@ import org.osmdroid.views.overlay.TilesOverlay
 class Mapa : AppCompatActivity() {
 
     private lateinit var bindingMapa: ActivityMapaBinding
-    private lateinit var sensorManejador: SensorManager
-    private lateinit var sensorLuz: Sensor
-    private lateinit var sensorLuzListener: SensorEventListener
+    //private lateinit var sensorManejador: SensorManager
+    //private lateinit var sensorLuz: Sensor
+    //private lateinit var sensorLuzListener: SensorEventListener
 
     private val startPoint = org.osmdroid.util.GeoPoint(4.628593, -74.065041)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        sensorManejador = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        /*sensorManejador = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         sensorLuz = sensorManejador.getDefaultSensor(Sensor.TYPE_LIGHT)!!
         sensorLuzListener = createLightSensorListener()
         sensorManejador.registerListener(
             sensorLuzListener,
             sensorLuz,
             SensorManager.SENSOR_DELAY_FASTEST
-        )
+        )*/
 
         val ctx = applicationContext
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx))
@@ -124,10 +124,10 @@ class Mapa : AppCompatActivity() {
         mapController.setZoom(18.0)
         mapController.setCenter(this.startPoint)
 
-        /*val uiManager = getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
+        val uiManager = getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
         if(uiManager.nightMode == UiModeManager.MODE_NIGHT_YES)
             bindingMapa.osmMap.overlayManager.tilesOverlay.setColorFilter(TilesOverlay.INVERT_COLORS)
-        */
+
 
 
     }
