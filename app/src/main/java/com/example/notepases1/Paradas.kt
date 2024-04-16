@@ -51,9 +51,10 @@ class Paradas : AppCompatActivity() {
         val locationManager = getSystemService(LOCATION_SERVICE) as android.location.LocationManager
         val location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
         location?.let {
-            val userLocation = GeoPoint(location.latitude, location.longitude)
+            val userLocation = GeoPoint(4.6277777777778, -74.065)
             val mapController = mapView.controller
             mapController.setCenter(userLocation)
+            mapController.setZoom(20)
 
             val marker = Marker(mapView)
             marker.position = userLocation
