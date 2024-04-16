@@ -3,19 +3,20 @@ package com.example.notepases1
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TextView
-import org.json.JSONArray
 import org.json.JSONObject
-import kotlin.math.log
+import org.osmdroid.util.GeoPoint
 
 class VerParaderos : AppCompatActivity() {
 
     var arregloParadas: MutableList<String> = ArrayList()
+    var paradasGeoMap: HashMap<String, GeoPoint> = hashMapOf(
+        "K7 #40" to GeoPoint(4.6277777777778, -74.065),
+        "K7 #45" to GeoPoint(4.62277777777783, -74.066388888889),
+        // Añade aquí todas las paradas con sus coordenadas
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,34 +27,24 @@ class VerParaderos : AppCompatActivity() {
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, arregloParadas)
         listaParadas.adapter = adapter
 
-        val bundle = Bundle()
-        val intentAlerta = Intent(this, ProgramarAlerta::class.java)
+        bus.setText("D81")
+        leerParadas("D81", listaParadas)
 
-        //val bundle: Bundle? = intent.extras
-        //val busSeleccionado = bundle?.getString("bus")
+        listaParadas.setOnItemClickListener { _, _, position, _ ->
+            val paradaSeleccionada = arregloParadas[position]
+            val geoPointSeleccionado = paradasGeoMap[paradaSeleccionada]
 
-        //if (busSeleccionado != null) {
-            bus.setText("D81")
-            leerParadas("D81",listaParadas)
-
-        //}
-
-        listaParadas.setOnItemClickListener(object : AdapterView.OnItemClickListener {
-            override fun onItemClick(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val paradaSeleccionada = arregloParadas[position]
-                llenarBundle(bundle, paradaSeleccionada)
-                intentAlerta.putExtras(bundle)
-                startActivity(intentAlerta)
+            val intent = Intent(this, RutaParadero::class.java).apply {
+                geoPointSeleccionado?.let {
+                    putExtra("latitud", it.latitude)
+                    putExtra("longitud", it.longitude)
+                }
             }
-        })
+            startActivity(intent)
+        }
     }
 
-    private fun leerParadas(busSeleccionado: String, listaParadas:ListView) {
+    private fun leerParadas(busSeleccionado: String, listaParadas: ListView) {
         try {
             val jsonString = assets.open("buses.json").bufferedReader().use { it.readText() }
             val jsonObject = JSONObject(jsonString)
@@ -66,7 +57,6 @@ class VerParaderos : AppCompatActivity() {
                     for (j in 0 until paradasArray.length()) {
                         val parada = paradasArray.getJSONObject(j)
                         arregloParadas.add(parada.getString("parada"))
-                        //Log.i("paradas",parada.toString())
                     }
                     break
                 }
@@ -76,9 +66,4 @@ class VerParaderos : AppCompatActivity() {
             e.printStackTrace()
         }
     }
-
-    fun llenarBundle(bundle: Bundle, itemSelecc: String) {
-        bundle.putString("paradaSel", itemSelecc)
-    }
-
 }
