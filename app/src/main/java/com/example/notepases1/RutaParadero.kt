@@ -1,5 +1,8 @@
 package com.example.notepases1
 
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import org.osmdroid.api.IMapController
@@ -39,12 +42,12 @@ class RutaParadero : AppCompatActivity() {
         dibujarRuta(ubicacionActual, destino)
     }
 
-    private fun marcadorDestino(point: GeoPoint, title: String) {
-        val marker = Marker(mapView)
-        marker.position = point
-        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-        marker.title = title
-        mapView.overlays.add(marker)
+    private fun marcadorDestino(point: GeoPoint, titulo: String) {
+        val marcador = Marker(mapView)
+        marcador.position = point
+        marcador.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+        marcador.title = titulo
+        mapView.overlays.add(marcador)
     }
 
 
@@ -55,11 +58,17 @@ class RutaParadero : AppCompatActivity() {
         mapView.overlays.add(line)
     }
 
-    private fun cambiarIcono(point: GeoPoint) {
-        val busMarker = Marker(mapView)
-        busMarker.icon = resources.getDrawable(R.drawable.iconobus, null)
+    private fun cambiarIcono(punto: GeoPoint) {
+        val marcador = Marker(mapView)
+        marcador.position = punto
+        marcador.icon = cambioTamañoIcono(resources.getDrawable(R.drawable.iconobus))
 
-        mapView.overlays.add(busMarker)
+        mapView.overlays.add(marcador)
+    }
+    private fun cambioTamañoIcono(icono: Drawable): Drawable {
+        val bitmap = (icono as BitmapDrawable).bitmap
+        val bitmapCambiado = Bitmap.createScaledBitmap(bitmap, 50, 50, false)
+        return BitmapDrawable(resources, bitmapCambiado)
     }
 
     override fun onResume() {
