@@ -43,6 +43,7 @@ class VerParaderos : AppCompatActivity() {
             }
             startActivity(intent)
         }
+
     }
 
     private fun leerParadas(busSeleccionado: String, listaParadas: ListView) {
@@ -67,4 +68,5 @@ class VerParaderos : AppCompatActivity() {
             e.printStackTrace()
         }
     }
+
 }

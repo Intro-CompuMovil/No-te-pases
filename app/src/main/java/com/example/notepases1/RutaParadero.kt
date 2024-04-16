@@ -30,16 +30,16 @@ class RutaParadero : AppCompatActivity() {
 
         mapController.setCenter(destino)
 
-        addMarker(destino, "Destino")
+        marcadorDestino(destino, "Destino")
 
 
         val ubicacionActual = GeoPoint(4.6277777777778, -74.065)
+        cambiarIcono(ubicacionActual)
 
-
-        drawRoute(ubicacionActual, destino)
+        dibujarRuta(ubicacionActual, destino)
     }
 
-    private fun addMarker(point: GeoPoint, title: String) {
+    private fun marcadorDestino(point: GeoPoint, title: String) {
         val marker = Marker(mapView)
         marker.position = point
         marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
@@ -48,11 +48,18 @@ class RutaParadero : AppCompatActivity() {
     }
 
 
-    private fun drawRoute(start: GeoPoint, destination: GeoPoint) {
+    private fun dibujarRuta(start: GeoPoint, destination: GeoPoint) {
         val line = Polyline()
         line.addPoint(start)
         line.addPoint(destination)
         mapView.overlays.add(line)
+    }
+
+    private fun cambiarIcono(point: GeoPoint) {
+        val busMarker = Marker(mapView)
+        busMarker.icon = resources.getDrawable(R.drawable.iconobus, null)
+
+        mapView.overlays.add(busMarker)
     }
 
     override fun onResume() {
