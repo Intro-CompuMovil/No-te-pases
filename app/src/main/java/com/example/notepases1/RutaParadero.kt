@@ -1,24 +1,47 @@
 package com.example.notepases1
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.example.notepases1.databinding.ActivityRutaParaderoBinding
 import org.osmdroid.api.IMapController
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Polyline
+import org.osmdroid.views.overlay.TilesOverlay
 
 class RutaParadero : AppCompatActivity() {
+    private lateinit var bindingRutaParadero: ActivityRutaParaderoBinding
     private lateinit var mapView: MapView
     private lateinit var mapController: IMapController
+    private lateinit var sensorManejador: SensorManager
+    private lateinit var sensorLuz: Sensor
+    private lateinit var sensorLuzListener: SensorEventListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        sensorManejador = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        sensorLuz = sensorManejador.getDefaultSensor(Sensor.TYPE_LIGHT)!!
+        sensorLuzListener = createLightSensorListener()
+        sensorManejador.registerListener(
+            sensorLuzListener,
+            sensorLuz,
+            SensorManager.SENSOR_DELAY_FASTEST
+        )
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ruta_paradero)
+        bindingRutaParadero = ActivityRutaParaderoBinding.inflate(layoutInflater)
+        setContentView(bindingRutaParadero.root)
         mapView = findViewById(R.id.osmMap)
         mapView.setTileSource(TileSourceFactory.MAPNIK)
         mapView.setBuiltInZoomControls(true)
@@ -40,6 +63,24 @@ class RutaParadero : AppCompatActivity() {
         cambiarIcono(ubicacionActual)
 
         dibujarRuta(ubicacionActual, destino)
+    }
+
+    private fun createLightSensorListener(): SensorEventListener {
+        return object : SensorEventListener {
+            override fun onSensorChanged(event: SensorEvent) {
+                if (bindingRutaParadero.osmMap != null) {
+                    if (event.values[0] < 3000) {
+                        Log.i("MAPS", "DARK MAP " + event.values[0])
+                        bindingRutaParadero.osmMap.overlayManager.tilesOverlay.setColorFilter(TilesOverlay.INVERT_COLORS)
+                    } else {
+                        Log.i("MAPS", "LIGHT MAP " + event.values[0])
+                        bindingRutaParadero.osmMap.overlayManager.tilesOverlay.setColorFilter(null)
+                    }
+                }
+            }
+
+            override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {}
+        }
     }
 
     private fun marcadorDestino(point: GeoPoint, titulo: String) {
