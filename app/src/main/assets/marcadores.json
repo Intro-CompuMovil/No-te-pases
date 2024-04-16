@@ -1,0 +1,64 @@
+{
+  "paradas": [
+    {
+      "nombre": "Parada 1 - Carrera 7 con Calle 40",
+      "lat": 4.6287,
+      "lon": -74.0650,
+      "buses": "D81, T31, 544B"
+    },
+    {
+      "nombre": "Parada 2 - Carrera 7 con Calle 39",
+      "lat": 4.6275,
+      "lon": -74.0651,
+      "buses": "D81, C15, E21"
+    },
+    {
+      "nombre": "Parada 3 - Carrera 8 con Calle 40",
+      "lat": 4.6289,
+      "lon": -74.0640,
+      "buses": "D81, L82, G12"
+    },
+    {
+      "nombre": "Parada 4 - Carrera 8 con Calle 39",
+      "lat": 4.6277,
+      "lon": -74.0641,
+      "buses": "D81, 123, Z13"
+    },
+    {
+      "nombre": "Parada 5 - Carrera 5 con Calle 39",
+      "lat": 4.6273,
+      "lon": -74.0672,
+      "buses": "D81, 97, J23"
+    },
+    {
+      "nombre": "Parada 6 - Carrera 5 con Calle 40",
+      "lat": 4.6291,
+      "lon": -74.0671,
+      "buses": "D81, B14, C19"
+    },
+    {
+      "nombre": "Parada 7 - Carrera 7 con Calle 41",
+      "lat": 4.6300,
+      "lon": -74.0649,
+      "buses": "D81, T11, 182"
+    },
+    {
+      "nombre": "Parada 8 - Carrera 8 con Calle 41",
+      "lat": 4.6302,
+      "lon": -74.0639,
+      "buses": "D81, H74, 341"
+    },
+    {
+      "nombre": "Parada 9 - Carrera 5 con Calle 41",
+      "lat": 4.6304,
+      "lon": -74.0670,
+      "buses": "D81, E44, 621"
+    },
+    {
+      "nombre": "Parada 10 - Carrera 5 con Calle 42",
+      "lat": 4.6312,
+      "lon": -74.0669,
+      "buses": "D81, 488, R12"
+    }
+  ]
+}

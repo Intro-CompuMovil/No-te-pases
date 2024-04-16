@@ -12,6 +12,7 @@ class Menu : AppCompatActivity() {
 
         val textRecargar = findViewById<TextView>(R.id.textRecargar)
         val textQR = findViewById<TextView>(R.id.textQR)
+        val textStops = findViewById<TextView>(R.id.textParadas)
 
 
         textRecargar.setOnClickListener{
@@ -21,6 +22,10 @@ class Menu : AppCompatActivity() {
         textQR.setOnClickListener {
             val intentQR = Intent(this, EscanearQR::class.java)
             startActivity(intentQR)
+        }
+        textStops.setOnClickListener {
+            val intentStops = Intent(this, Paradas::class.java)
+            startActivity(intentStops)
         }
     }
 }

@@ -64,8 +64,12 @@
             android:name=".Registro"
             android:exported="false" />
         <activity
+            android:name=".Paradas"
+            android:exported="false"/>
+        <activity
             android:name=".InicioSesion"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

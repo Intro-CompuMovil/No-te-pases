@@ -101,6 +101,27 @@
         android:layout_marginTop="80dp"
         android:layout_marginLeft="110dp"/>
 
+    <ImageView
+        android:id="@+id/iconoParadas"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/parada"
+        android:layout_below="@+id/iconoQR"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="60dp"/>
+
+    <TextView
+        android:id="@+id/textParadas"
+        android:text="Paradas Cercanas"
+        android:textSize="28dp"
+        android:textAlignment="center"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textQR"
+        android:fontFamily="@font/originregular"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="110dp"/>
+
 
 
 
