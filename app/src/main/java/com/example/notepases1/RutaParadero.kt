@@ -23,7 +23,7 @@ class RutaParadero : AppCompatActivity() {
         mapController = mapView.controller
         mapController.setZoom(15)
 
-        // Obtén la latitud y longitud desde el Intent
+
         val latitud = intent.getDoubleExtra("latitud", 0.0)
         val longitud = intent.getDoubleExtra("longitud", 0.0)
         val destino = GeoPoint(latitud, longitud)
@@ -47,7 +47,7 @@ class RutaParadero : AppCompatActivity() {
         mapView.overlays.add(marker)
     }
 
-    // Método para dibujar la ruta
+
     private fun drawRoute(start: GeoPoint, destination: GeoPoint) {
         val line = Polyline()
         line.addPoint(start)

@@ -13,10 +13,10 @@ class VerParaderos : AppCompatActivity() {
 
     var arregloParadas: MutableList<String> = ArrayList()
     var paradasGeoMap: HashMap<String, GeoPoint> = hashMapOf(
-        "K7 #40" to GeoPoint(4.6277777777778, 74.065),
-        "K7 #45" to GeoPoint(4.62277777777783, 74.066388888889),
-        "K7 #51" to GeoPoint(4.6380555555556, 74.063055555556),
-        "K7 #56" to GeoPoint(4.6422222222222, 74.062222222222)
+        "K7 #40" to GeoPoint(4.628243178554855, -74.06538219116572),
+        "K7 #45" to GeoPoint(4.6323221460755875, -74.06411513313485),
+        "K7 #51" to GeoPoint(4.63811449459301, -74.06342813349394),
+        "K7 #56" to GeoPoint(4.642889706166167, -74.06218292000156)
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
