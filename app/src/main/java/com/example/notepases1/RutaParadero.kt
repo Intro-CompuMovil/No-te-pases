@@ -33,7 +33,7 @@ class RutaParadero : AppCompatActivity() {
         addMarker(destino, "Destino")
 
 
-        val ubicacionActual = GeoPoint(4.6277777777778, 74.065)
+        val ubicacionActual = GeoPoint(4.6277777777778, -74.065)
 
 
         drawRoute(ubicacionActual, destino)
