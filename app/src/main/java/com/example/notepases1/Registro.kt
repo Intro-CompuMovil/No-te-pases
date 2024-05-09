@@ -42,14 +42,15 @@ class Registro : AppCompatActivity() {
 
         val correo = findViewById<EditText>(R.id.editTextCorreo)
         val contrasena = findViewById<EditText>(R.id.editTextPassword)
-        val nombre = findViewById<EditText>(R.id.editTextNombre)
         val registroButton = findViewById<Button>(R.id.buttonRegistro)
         val ingresoTextView = findViewById<TextView>(R.id.ingresar)
 
         registroButton.setOnClickListener {
-            verificarCorreoExistente(correo.text.toString()){estadoCorreo ->
-                if (validarCampos() && !estadoCorreo){
-                    registroUsarioAuthentication(correo.text.toString(), contrasena.text.toString())
+            if (validarCampos()){
+                verificarCorreoExistente(correo.text.toString()){estadoCorreo ->
+                    if (!estadoCorreo){
+                        registroUsarioAuthentication(correo.text.toString(), contrasena.text.toString())
+                    }
                 }
             }
         }
