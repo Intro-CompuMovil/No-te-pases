@@ -1,37 +1,57 @@
 package com.example.notepases1
 
-import android.content.Context
+import android.content.ContentValues
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import org.json.JSONArray
-import org.json.JSONObject
-import java.io.IOException
-import java.io.InputStream
-import java.io.OutputStreamWriter
+import com.example.notepases1.databinding.ActivityRegistroBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 
 class Registro : AppCompatActivity() {
 
-    object Registrados {
-        var usuariosRegistrados: MutableList<Usuario> = mutableListOf()
-    }
+    //Binding
+    private lateinit var bindingRegistro: ActivityRegistroBinding
+
+    //Firebase
+    private lateinit var autenticacion: FirebaseAuth
+    private lateinit var storage: FirebaseStorage
+    private val database = FirebaseDatabase.getInstance()
+    private lateinit var refer: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registro)
+        bindingRegistro = ActivityRegistroBinding.inflate(layoutInflater)
+        setContentView(bindingRegistro.root)
+        autenticacion = Firebase.auth
+        storage = Firebase.storage
 
-        val usuarioEditText = findViewById<EditText>(R.id.editTextUsername)
-        val contrasenaEditText = findViewById<EditText>(R.id.editTextPassword)
-        val contrasena2EditText = findViewById<EditText>(R.id.editTextPassword2)
+        val correo = findViewById<EditText>(R.id.editTextCorreo)
+        val contrasena = findViewById<EditText>(R.id.editTextPassword)
+        val nombre = findViewById<EditText>(R.id.editTextNombre)
         val registroButton = findViewById<Button>(R.id.buttonRegistro)
         val ingresoTextView = findViewById<TextView>(R.id.ingresar)
 
         registroButton.setOnClickListener {
-            registrarUsuario(usuarioEditText, contrasenaEditText, contrasena2EditText)
+            verificarCorreoExistente(correo.text.toString()){estadoCorreo ->
+                if (validarCampos() && !estadoCorreo){
+                    registroUsarioAuthentication(correo.text.toString(), contrasena.text.toString())
+                }
+            }
         }
 
        ingresoTextView.setOnClickListener {
@@ -40,83 +60,118 @@ class Registro : AppCompatActivity() {
         }
     }
 
-    private fun registrarUsuario(usuario: EditText, contrasena: EditText, contrasena2: EditText) {
-        val usuarioStr = usuario.text.toString()
-        val contrasenaStr = contrasena.text.toString()
-        val contrasena2Str = contrasena2.text.toString()
+    //Validación de campos
 
-        if (validarExisteUsuario(usuarioStr)) {
-            if (contrasenaStr == contrasena2Str) {
-                Registrados.usuariosRegistrados.add(Usuario(usuarioStr, contrasenaStr, "", 0))
-                saveJSONToFile(Registrados.usuariosRegistrados.last())
-                Toast.makeText(this, "Usuario registrado", Toast.LENGTH_SHORT).show()
-                val intentMenu = Intent(this, Menu::class.java)
-                startActivity(intentMenu)
-            } else {
-                Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show()
+    private fun verificarCorreoExistente(correo: String, onComplete: (Boolean) -> Unit) {
+        autenticacion.fetchSignInMethodsForEmail(correo)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    val signInMethods = task.result?.signInMethods
+                    if (signInMethods?.isEmpty() == true) {
+                        Toast.makeText(this, "El correo electrónico está disponible para registro", Toast.LENGTH_SHORT).show()
+                        onComplete(false)
+                    } else {
+                        Toast.makeText(this, "El correo electrónico ya está registrado", Toast.LENGTH_SHORT).show()
+                        onComplete(true)
+                    }
+                } else {
+                    // Error al verificar el correo electrónico
+                    Toast.makeText(this, "Error al verificar el correo electrónico", Toast.LENGTH_SHORT).show()
+                    onComplete(false)
+                }
             }
-        }
     }
 
-    private fun validarExisteUsuario(usuario: String): Boolean {
-        return Registrados.usuariosRegistrados.none { it.usuario == usuario }
-    }
+    private fun validarCampos(): Boolean{
+        var valid = true
 
-    private fun loadJSONFromAsset(): MutableList<Usuario> {
-        var json: String? = null
-        try {
-            val istream: InputStream = assets.open("usuarios.json")
-            val size: Int = istream.available()
-            val buffer = ByteArray(size)
-            istream.read(buffer)
-            istream.close()
-            json = String(buffer, Charsets.UTF_8)
-        } catch (ex: IOException) {
-            ex.printStackTrace()
+        val email = bindingRegistro.editTextCorreo.text.toString()
+        if(TextUtils.isEmpty(email)){
+            bindingRegistro.editTextCorreo.error = "Requerido."
+            valid = false
+        }else{
+            bindingRegistro.editTextCorreo.error = null
         }
 
-        val usuarios: MutableList<Usuario> = mutableListOf()
-        json?.let {
-            val jsonObject = JSONObject(json)
-            val jsonArray = jsonObject.getJSONArray("usuarios")
-            for (i in 0 until jsonArray.length()) {
-                val usuarioJSONObject = jsonArray.getJSONObject(i)
-                val nombre = usuarioJSONObject.getString("usuario")
-                val contrasena = usuarioJSONObject.getString("contraseña")
-                val tipo = usuarioJSONObject.getString("tipo")
-                val saldo = usuarioJSONObject.getInt("saldo")
-                usuarios.add(Usuario(nombre, contrasena, tipo, saldo))
+        val contrasena = bindingRegistro.editTextPassword.text.toString()
+        if(TextUtils.isEmpty(contrasena)){
+            bindingRegistro.editTextPassword.error = "Requerido."
+            valid = false
+        }else{
+            bindingRegistro.editTextPassword.error = null
+        }
+
+        val nombre = bindingRegistro.editTextNombre.text.toString()
+        if(TextUtils.isEmpty(nombre)){
+            bindingRegistro.editTextNombre.error = "Requerido."
+            valid = false
+        }else{
+            bindingRegistro.editTextNombre.error = null
+        }
+
+        if (!bindingRegistro.usuarioPasajero.isChecked && !bindingRegistro.usuarioBus.isChecked) {
+            Toast.makeText(this, "Seleccione un tipo de usuario", Toast.LENGTH_SHORT).show()
+            valid = false
+        } else if (bindingRegistro.usuarioPasajero.isChecked && bindingRegistro.usuarioBus.isChecked) {
+            Toast.makeText(this, "Debe selccionar solo un tipo de usuario", Toast.LENGTH_SHORT).show()
+            valid = false
+        }
+
+        return valid
+    }
+
+    //Código de registro
+    private fun registroUsarioAuthentication(email: String, contrasena: String){
+        autenticacion.createUserWithEmailAndPassword(email, contrasena)
+            .addOnCompleteListener(this){task ->
+                if(task.isSuccessful){
+                    Log.d(ContentValues.TAG, "crearUsuarioCorreo: onComplete: " + task.isSuccessful)
+                    val usuario = autenticacion.currentUser
+                    if(usuario != null){
+                        val actualizacionUsarios = UserProfileChangeRequest.Builder()
+                        actualizacionUsarios.setDisplayName(email)
+                        usuario.updateProfile(actualizacionUsarios.build())
+                        updateUI(usuario)
+                        registrarUsuarioRealtimeDatabase()
+                    }
+                }else{
+                    Toast.makeText(this, "Registro fallido", Toast.LENGTH_SHORT).show()
+                    task?.exception?.message?.let { Log.w(ContentValues.TAG, it)}
+                }
             }
-        }
-        return usuarios
     }
 
-    private fun saveJSONToFile(usuario: Usuario) {
-        val usuarios = loadJSONFromAsset()
-        usuarios.add(usuario)
-
-        val jsonArray = JSONArray()
-        usuarios.forEach {
-            val jsonObject = JSONObject().apply {
-                put("usuario", it.usuario)
-                put("contraseña", it.contrasena)
-                put("tipo", it.tipo)
-                put("saldo", it.saldo)
-            }
-            jsonArray.put(jsonObject)
-        }
-
-        val jsonObject = JSONObject().apply { put("usuarios", jsonArray) }
-
-        try {
-            val outputStream = openFileOutput("usuarios.json", Context.MODE_PRIVATE)
-            val writer = OutputStreamWriter(outputStream)
-            writer.write(jsonObject.toString())
-            writer.flush()
-            writer.close()
-        } catch (e: IOException) {
-            e.printStackTrace()
+    private fun updateUI(usuarioActual: FirebaseUser?) {
+        if(usuarioActual != null){
+            val intentInicioSesion = Intent(this, InicioSesion::class.java)
+            startActivity(intentInicioSesion)
+        }else{
+            bindingRegistro.editTextCorreo.setText("")
+            bindingRegistro.editTextPassword.setText("")
+            bindingRegistro.editTextNombre.setText("")
         }
     }
+
+    //Código relacionado con el realtime database
+    private fun registrarUsuarioRealtimeDatabase(){
+        val nombre = bindingRegistro.editTextNombre
+        val pasajero = bindingRegistro.usuarioPasajero
+        val conductor = bindingRegistro.usuarioBus
+
+        val usuarioRegistro = Usuario()
+        usuarioRegistro.uid = autenticacion.currentUser!!.uid
+        usuarioRegistro.nombre = nombre.text.toString()
+        usuarioRegistro.saldo = 0
+
+        if(pasajero.isChecked){
+            usuarioRegistro.tipo = "pasajero"
+        }else if (conductor.isChecked){
+            usuarioRegistro.tipo = "conductor"
+        }
+
+        refer = database.getReference(Paths.PATH_USERS+autenticacion.currentUser!!.uid)
+        refer.setValue(usuarioRegistro)
+    }
+
 
 }

@@ -23,7 +23,7 @@ class RecargarCuenta : AppCompatActivity() {
         val decremento = findViewById<ImageButton>(R.id.botonDecremento)
         val guardar = findViewById<Button>(R.id.botonGuardarRecarga)
 
-        datosUsuario?.let { usuario -> saldoActual.text = "Saldo actual: ${usuario.optString("saldo", "0")}" }
+        datosUsuario?.let { usuario -> saldoActual.text = "Saldo actual: ${usuario.saldo ?: 0}" }
 
         modificarSaldo(saldoRecarga, aumento, decremento)
         saldoRecarga.addTextChangedListener(object : TextWatcher {
@@ -63,11 +63,11 @@ class RecargarCuenta : AppCompatActivity() {
     }
 
     fun guardarDatos(saldoRecarga: EditText,saldoActual: TextView){
-        val nuevoSaldo:Int = saldoRecarga.text.toString().toInt() + (InicioSesion.datosUsuario?.getString("saldo")?.toInt() ?: 0)
-        InicioSesion.datosUsuario?.put("saldo",nuevoSaldo)
+        val nuevoSaldo:Int = saldoRecarga.text.toString().toInt() + (InicioSesion.datosUsuario?.saldo ?: 0)
+        InicioSesion.datosUsuario?.saldo = nuevoSaldo
         InicioSesion.datosUsuario.let { usuario ->
             if (usuario != null) {
-                saldoActual.text = "Saldo actual: ${usuario.optString("saldo", "0")}"
+                saldoActual.text = "Saldo actual: ${usuario.saldo ?: 0}"
             }
         }
     }

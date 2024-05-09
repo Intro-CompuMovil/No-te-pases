@@ -161,7 +161,7 @@ class EscanearQR : AppCompatActivity() {
                 vistaPrevia()
             } else {
                 Toast.makeText(this,
-                    "Permiso no otorgado por el usuario",
+                    "Permiso no otorgado por el nombre",
                     Toast.LENGTH_SHORT).show()
                 finish()
             }

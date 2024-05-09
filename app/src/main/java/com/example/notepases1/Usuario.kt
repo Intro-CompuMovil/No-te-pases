@@ -1,3 +1,10 @@
 package com.example.notepases1
 
-data class Usuario (val usuario: String, val contrasena: String, val tipo: String, val saldo : Int)
+data class Usuario (
+    var uid: String,
+    var nombre: String,
+    var tipo: String,
+    var saldo : Int
+){
+    constructor() : this("","", "", 0)
+}

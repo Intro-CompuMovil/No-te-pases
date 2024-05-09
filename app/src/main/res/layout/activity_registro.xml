@@ -61,7 +61,7 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/editTextUsername"
+        android:id="@+id/editTextCorreo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -69,7 +69,7 @@
         android:layout_below="@+id/signUp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:hint="Username o Email"
+        android:hint="Email"
         android:textAlignment="center"
         android:textSize="13sp"/>
 
@@ -81,7 +81,7 @@
         android:inputType="textPassword"
         tools:layout_editor_absoluteX="105dp"
         tools:layout_editor_absoluteY="374dp"
-        android:layout_below="@+id/editTextUsername"
+        android:layout_below="@+id/editTextCorreo"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:hint="Password"
@@ -89,7 +89,7 @@
         android:textSize="13sp"/>
 
     <EditText
-        android:id="@+id/editTextPassword2"
+        android:id="@+id/editTextNombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -99,9 +99,29 @@
         android:layout_below="@+id/editTextPassword"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:hint="Retype Password"
+        android:hint="Nombre"
         android:textAlignment="center"
         android:textSize="13sp"/>
+
+    <CheckBox
+        android:id="@+id/usuarioBus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextNombre"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="100dp"
+        android:text="Perfil Bus"
+        />
+
+    <CheckBox
+        android:id="@+id/usuarioPasajero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextNombre"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="100dp"
+        android:text="Perfil Pasajero"
+        />
 
     <CheckBox
         android:id="@+id/checkBox"
@@ -110,7 +130,7 @@
         android:text="Aceptar los términos y condiciones"
         android:textSize="9sp"
         android:textColor="@color/Subrayado"
-        android:layout_below="@+id/editTextPassword2"
+        android:layout_below="@+id/usuarioBus"
         android:layout_centerHorizontal="true"/>
 
     <Button

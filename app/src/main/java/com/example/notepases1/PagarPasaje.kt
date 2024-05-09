@@ -17,7 +17,7 @@ class PagarPasaje : AppCompatActivity() {
         val valorPasaje = findViewById<TextView>(R.id.valorPasaje)
         val BTNPagar = findViewById<Button>(R.id.botonPagar)
 
-        saldoPasajero.setText(InicioSesion.datosUsuario?.getString("saldo"))
+        saldoPasajero.setText(InicioSesion.datosUsuario?.saldo.toString())
         valorPasaje.setText("3.000")
 
         /*BTNPagar.setOnClickListener {
@@ -29,13 +29,13 @@ class PagarPasaje : AppCompatActivity() {
             }
         }*/
         BTNPagar.setOnClickListener {
-            val saldoActual = InicioSesion.datosUsuario?.getString("saldo")?.toIntOrNull()
+            val saldoActual = InicioSesion.datosUsuario?.saldo
             val valorPasajeInt = 3000
             if (saldoActual != null && valorPasajeInt != null) {
                 if (saldoActual >= valorPasajeInt) {
                     val nuevoSaldo = saldoActual - valorPasajeInt
                     saldoPasajero.text = nuevoSaldo.toString()
-                    InicioSesion.datosUsuario?.put("saldo", nuevoSaldo.toString())
+                    InicioSesion.datosUsuario?.saldo = nuevoSaldo
                 } else {
                     Toast.makeText(this, "Saldo insuficiente", Toast.LENGTH_SHORT).show()
                 }
