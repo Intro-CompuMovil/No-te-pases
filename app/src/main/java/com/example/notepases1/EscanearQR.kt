@@ -4,7 +4,9 @@ import android.Manifest
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.icu.text.SimpleDateFormat
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -23,6 +25,13 @@ import android.widget.ImageView
 import androidx.camera.core.ImageCaptureException
 import com.bumptech.glide.Glide
 import com.example.notepases1.databinding.ActivityEscanearQrBinding
+import com.google.zxing.BinaryBitmap
+import com.google.zxing.LuminanceSource
+import com.google.zxing.MultiFormatReader
+import com.google.zxing.RGBLuminanceSource
+import com.google.zxing.common.HybridBinarizer
+import org.json.JSONObject
+import java.io.FileNotFoundException
 import java.util.Locale
 
 class EscanearQR : AppCompatActivity() {
@@ -41,10 +50,6 @@ class EscanearQR : AppCompatActivity() {
         setContentView(vistaBindingQR.root)
 
         val botonQR = vistaBindingQR.buttonLeerQR
-        val botonEstacion = vistaBindingQR.buttonEstacion
-        val botonBus = vistaBindingQR.buttonBus
-        val botonPagar = vistaBindingQR.buttonPagar
-        val resultadoImagen =vistaBindingQR.imagenQR
 
         // Request camera permissions
         if (allPermissionsGranted()) {
@@ -54,29 +59,13 @@ class EscanearQR : AppCompatActivity() {
                 this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
         }
 
-        botonQR.setOnClickListener { tomarFotico(resultadoImagen) }
+        botonQR.setOnClickListener { tomarFotico() }
 
         cameraExecutor = Executors.newSingleThreadExecutor()
 
-        botonBus.setOnClickListener {
-            val intentBus = Intent(this, VerParaderos::class.java)
-            val bundleBus = Bundle()
-            bundleBus.putString("bus","D81")
-            startActivity(intentBus)
-        }
-
-        botonEstacion.setOnClickListener {
-            val intentMapa = Intent(this, Mapa::class.java)
-            startActivity(intentMapa)
-        }
-
-        botonPagar.setOnClickListener {
-            val intentPagarPasaje = Intent(this, PagarPasaje::class.java)
-            startActivity(intentPagarPasaje)
-        }
     }
 
-    private fun tomarFotico(resultadoImagen: ImageView) {
+    private fun tomarFotico() {
         val capturarImagen = capturarImagen ?: return
 
         val nombreImagen = SimpleDateFormat(FILENAME_FORMAT, Locale.US)
@@ -104,13 +93,58 @@ class EscanearQR : AppCompatActivity() {
                     Toast.makeText(baseContext,"No se pudo tomar la foto: ${exc.message})",Toast.LENGTH_SHORT).show()
                 }
 
-                override fun
-                        onImageSaved(output: ImageCapture.OutputFileResults){
+                override fun onImageSaved(output: ImageCapture.OutputFileResults){
                     Toast.makeText(baseContext, "Captura de pantalla existosa: ${output.savedUri}", Toast.LENGTH_SHORT).show()
-                    Glide.with(this@EscanearQR).load(output.savedUri).into(resultadoImagen)
+                    val contenido = decodeQRImage(output.savedUri!!)
+                    if(contenido != null) {
+                        val jsonUri = JSONObject(contenido)
+                        Log.i("QR", jsonUri.toString())
+                        identificadorIntent(jsonUri)
+                    }
                 }
             }
         )
+    }
+
+    private fun decodeQRImage(uri: Uri): String? {
+        try{
+            val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(uri))
+            val width = bitmap.width
+            val height = bitmap.height
+            val pixels = IntArray(width * height)
+            bitmap.getPixels(pixels, 0, width, 0, 0, width, height)
+            val sourceQr: LuminanceSource = RGBLuminanceSource(width, height, pixels)
+            val binaryBitmap = BinaryBitmap(HybridBinarizer(sourceQr))
+            val reader = MultiFormatReader()
+            val resultado = reader.decode(binaryBitmap)
+            Log.i("CorrecciónQR", resultado.text)
+            return resultado.text
+        } catch (e: FileNotFoundException){
+            e.printStackTrace()
+        } catch (e: Exception){
+            e.printStackTrace()
+        }
+        return null
+    }
+
+    private fun identificadorIntent(jsonUri: JSONObject){
+        when(jsonUri.getString("objeto")){
+            "paradero" -> {
+                //Indica que tan lejos están los buses del paradero
+                val intentParadero = Intent(this, Mapa::class.java)
+                startActivity(intentParadero)
+            }
+            "pasaje" -> {
+                //Pagar el pasaje y descontar el saldo
+                val intentPagarPasaje = Intent(this, PagarPasaje::class.java)
+                startActivity(intentPagarPasaje)
+            }
+            "bus" -> {
+                //Muestra las próximas paradas del bus
+                val intentBus = Intent(this, VerParaderos::class.java)
+                startActivity(intentBus)
+            }
+        }
     }
 
     private fun vistaPrevia() {

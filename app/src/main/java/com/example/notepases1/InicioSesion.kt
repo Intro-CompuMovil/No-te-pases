@@ -131,8 +131,8 @@ class InicioSesion : AppCompatActivity() {
                     val myUser = singleSnapshot.getValue(Usuario::class.java)
                     if (myUser?.uid == auth.currentUser?.uid) {
                         datosUsuario = myUser
+                        Log.i(TAG, "Encontró usuario: " + myUser?.nombre)
                     }
-                    Log.i(TAG, "Encontró usuario: " + myUser?.nombre)
                 }
             }
 
