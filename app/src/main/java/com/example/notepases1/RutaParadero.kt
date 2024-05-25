@@ -9,10 +9,13 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
+import android.os.StrictMode
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notepases1.databinding.ActivityRutaParaderoBinding
 import org.osmdroid.api.IMapController
+import org.osmdroid.bonuspack.routing.OSRMRoadManager
+import org.osmdroid.bonuspack.routing.RoadManager
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
@@ -27,16 +30,21 @@ class RutaParadero : AppCompatActivity() {
     private lateinit var sensorManejador: SensorManager
     private lateinit var sensorLuz: Sensor
     private lateinit var sensorLuzListener: SensorEventListener
+    private lateinit var roadManager: RoadManager
+    private var roadOverlay: Polyline? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         sensorManejador = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         sensorLuz = sensorManejador.getDefaultSensor(Sensor.TYPE_LIGHT)!!
         sensorLuzListener = createLightSensorListener()
+        roadManager = OSRMRoadManager(this, "ANDROID")
         sensorManejador.registerListener(
             sensorLuzListener,
             sensorLuz,
             SensorManager.SENSOR_DELAY_FASTEST
         )
+        var policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ruta_paradero)
@@ -93,10 +101,19 @@ class RutaParadero : AppCompatActivity() {
 
 
     private fun dibujarRuta(start: GeoPoint, destination: GeoPoint) {
-        val line = Polyline()
-        line.addPoint(start)
-        line.addPoint(destination)
-        mapView.overlays.add(line)
+        val routePoints = ArrayList<GeoPoint>()
+        routePoints.add(start)
+        routePoints.add(destination)
+        val road = roadManager.getRoad(routePoints)
+        Log.i("OSM_RUTA", "Route lenght: ${road.mLength} klm")
+        Log.i("OSM_RUTA", "Duración: ${road.mDuration/60} minutos")
+        if(bindingRutaParadero.osmMap != null){
+            roadOverlay?.let{bindingRutaParadero.osmMap.overlays.remove(it)}
+            roadOverlay = RoadManager.buildRoadOverlay(road)
+            roadOverlay?.outlinePaint?.color = resources.getColor(R.color.Subrayado)
+            roadOverlay?.outlinePaint?.strokeWidth = 10f
+            bindingRutaParadero.osmMap.overlays.add(roadOverlay)
+        }
     }
 
     private fun cambiarIcono(punto: GeoPoint) {
