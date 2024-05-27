@@ -21,9 +21,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.core.Preview
 import androidx.camera.core.CameraSelector
 import android.util.Log
-import android.widget.ImageView
 import androidx.camera.core.ImageCaptureException
-import com.bumptech.glide.Glide
 import com.example.notepases1.databinding.ActivityEscanearQrBinding
 import com.google.zxing.BinaryBitmap
 import com.google.zxing.LuminanceSource
@@ -132,6 +130,9 @@ class EscanearQR : AppCompatActivity() {
             "paradero" -> {
                 //Indica que tan lejos están los buses del paradero
                 val intentParadero = Intent(this, Mapa::class.java)
+                val bundleParadero = Bundle()
+                bundleParadero.putInt("id", jsonUri.getInt("id"))
+                intentParadero.putExtras(bundleParadero)
                 startActivity(intentParadero)
             }
             "pasaje" -> {
@@ -142,6 +143,9 @@ class EscanearQR : AppCompatActivity() {
             "bus" -> {
                 //Muestra las próximas paradas del bus
                 val intentBus = Intent(this, VerParaderos::class.java)
+                val bundleBus = Bundle()
+                bundleBus.putInt("id", jsonUri.getInt("id"))
+                intentBus.putExtras(bundleBus)
                 startActivity(intentBus)
             }
         }
