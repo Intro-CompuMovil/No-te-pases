@@ -6,13 +6,15 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TextView
-import org.json.JSONObject
+import com.google.firebase.database.*
 import org.osmdroid.util.GeoPoint
+import android.widget.Toast
 
 class VerParaderos : AppCompatActivity() {
 
-    var arregloParadas: MutableList<String> = ArrayList()
-    var paradasGeoMap: HashMap<String, GeoPoint> = hashMapOf(
+    private lateinit var database: DatabaseReference
+    private var arregloParadas: MutableList<String> = ArrayList()
+    private var paradasGeoMap: HashMap<String, GeoPoint> = hashMapOf(
         "K7 #40" to GeoPoint(4.628243178554855, -74.06538219116572),
         "K7 #45" to GeoPoint(4.6323221460755875, -74.06411513313485),
         "K7 #51" to GeoPoint(4.63811449459301, -74.06342813349394),
@@ -23,13 +25,21 @@ class VerParaderos : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ver_paraderos)
 
+        // Initialize Firebase Database
+        database = FirebaseDatabase.getInstance().reference
+
         val listaParadas = findViewById<ListView>(R.id.listaParadas)
         val bus = findViewById<TextView>(R.id.bus)
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, arregloParadas)
         listaParadas.adapter = adapter
 
-        bus.setText("D81")
-        leerParadas("D81", listaParadas)
+        val busId = intent.getIntExtra("id", -1)
+        if (busId != -1) {
+            leerParadas(busId)
+        } else {
+            // Handle error: no bus ID provided
+            Toast.makeText(this, "No bus ID provided", Toast.LENGTH_SHORT).show()
+        }
 
         listaParadas.setOnItemClickListener { _, _, position, _ ->
             val paradaSeleccionada = arregloParadas[position]
@@ -43,30 +53,24 @@ class VerParaderos : AppCompatActivity() {
             }
             startActivity(intent)
         }
-
     }
 
-    private fun leerParadas(busSeleccionado: String, listaParadas: ListView) {
-        try {
-            val jsonString = assets.open("buses.json").bufferedReader().use { it.readText() }
-            val jsonObject = JSONObject(jsonString)
-            val busesArray = jsonObject.getJSONArray("buses")
-
-            for (i in 0 until busesArray.length()) {
-                val bus = busesArray.getJSONObject(i)
-                if (bus.getString("nombreBus") == busSeleccionado) {
-                    val paradasArray = bus.getJSONArray("paradas")
-                    for (j in 0 until paradasArray.length()) {
-                        val parada = paradasArray.getJSONObject(j)
-                        arregloParadas.add(parada.getString("parada"))
+    private fun leerParadas(busId: Int) {
+        database.child(Paths.PATH_BUSES).child("bus_$busId").child("paradas")
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    arregloParadas.clear()
+                    for (paradaSnapshot in snapshot.children) {
+                        val parada = paradaSnapshot.child("parada").value as String
+                        arregloParadas.add(parada)
                     }
-                    break
+                    (findViewById<ListView>(R.id.listaParadas).adapter as ArrayAdapter<String>).notifyDataSetChanged()
                 }
-            }
-            (listaParadas.adapter as ArrayAdapter<String>).notifyDataSetChanged()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
 
+                override fun onCancelled(error: DatabaseError) {
+                    // Handle possible errors.
+                    error.toException().printStackTrace()
+                }
+            })
+    }
 }
