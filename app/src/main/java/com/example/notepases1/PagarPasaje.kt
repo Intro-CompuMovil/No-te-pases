@@ -6,12 +6,24 @@ import android.provider.Settings.Global.putString
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.ktx.Firebase
 
 
 class PagarPasaje : AppCompatActivity() {
+
+    //Firebase
+    private lateinit var auth: FirebaseAuth
+    private val database = FirebaseDatabase.getInstance()
+    private lateinit var refer: DatabaseReference
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pagar_pasaje)
+        auth = Firebase.auth
 
         var saldoPasajero = findViewById<TextView>(R.id.saldoPasajero)
         val valorPasaje = findViewById<TextView>(R.id.valorPasaje)
@@ -20,14 +32,6 @@ class PagarPasaje : AppCompatActivity() {
         saldoPasajero.setText(InicioSesion.datosUsuario?.saldo.toString())
         valorPasaje.setText("3.000")
 
-        /*BTNPagar.setOnClickListener {
-            val saldo = InicioSesion.datosUsuario?.getString("saldo")?.toIntOrNull()
-            if (saldo != null) {
-                val nuevoSaldo = saldo - 3000
-                InicioSesion.datosUsuario?.put("saldo", nuevoSaldo.toString())
-                saldoPasajero.text = nuevoSaldo.toString()
-            }
-        }*/
         BTNPagar.setOnClickListener {
             val saldoActual = InicioSesion.datosUsuario?.saldo
             val valorPasajeInt = 3000
@@ -36,6 +40,8 @@ class PagarPasaje : AppCompatActivity() {
                     val nuevoSaldo = saldoActual - valorPasajeInt
                     saldoPasajero.text = nuevoSaldo.toString()
                     InicioSesion.datosUsuario?.saldo = nuevoSaldo
+                    refer = database.getReference(Paths.PATH_USERS + auth.currentUser!!.uid)
+                    refer.child("saldo").setValue(nuevoSaldo)
                 } else {
                     Toast.makeText(this, "Saldo insuficiente", Toast.LENGTH_SHORT).show()
                 }

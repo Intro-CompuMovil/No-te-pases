@@ -9,11 +9,23 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.ktx.Firebase
 
 class RecargarCuenta : AppCompatActivity() {
+
+    //Firebase
+    private lateinit var auth: FirebaseAuth
+    private val database = FirebaseDatabase.getInstance()
+    private lateinit var refer: DatabaseReference
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recargar_cuenta)
+        auth = Firebase.auth
 
         val datosUsuario = InicioSesion.datosUsuario
 
@@ -65,6 +77,8 @@ class RecargarCuenta : AppCompatActivity() {
     fun guardarDatos(saldoRecarga: EditText,saldoActual: TextView){
         val nuevoSaldo:Int = saldoRecarga.text.toString().toInt() + (InicioSesion.datosUsuario?.saldo ?: 0)
         InicioSesion.datosUsuario?.saldo = nuevoSaldo
+        refer = database.getReference(Paths.PATH_USERS + auth.currentUser!!.uid)
+        refer.child("saldo").setValue(nuevoSaldo)
         InicioSesion.datosUsuario.let { usuario ->
             if (usuario != null) {
                 saldoActual.text = "Saldo actual: ${usuario.saldo ?: 0}"
