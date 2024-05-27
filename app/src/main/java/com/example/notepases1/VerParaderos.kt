@@ -3,12 +3,17 @@ package com.example.notepases1
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TextView
 import com.google.firebase.database.*
 import org.osmdroid.util.GeoPoint
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
+import com.google.firebase.auth.FirebaseAuth
 
 class VerParaderos : AppCompatActivity() {
 
@@ -52,6 +57,28 @@ class VerParaderos : AppCompatActivity() {
                 }
             }
             startActivity(intent)
+        }
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menudesp, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menuLogOut -> {
+                FirebaseAuth.getInstance().signOut()
+                val intentLogOut = Intent(this, InicioSesion::class.java)
+                intentLogOut.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intentLogOut)
+                finishAffinity()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

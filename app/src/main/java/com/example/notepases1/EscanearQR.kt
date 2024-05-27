@@ -21,8 +21,13 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.core.Preview
 import androidx.camera.core.CameraSelector
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.widget.ImageButton
 import androidx.camera.core.ImageCaptureException
 import com.example.notepases1.databinding.ActivityEscanearQrBinding
+import com.google.firebase.auth.FirebaseAuth
 import com.google.zxing.BinaryBitmap
 import com.google.zxing.LuminanceSource
 import com.google.zxing.MultiFormatReader
@@ -60,9 +65,28 @@ class EscanearQR : AppCompatActivity() {
         botonQR.setOnClickListener { tomarFotico() }
 
         cameraExecutor = Executors.newSingleThreadExecutor()
-
+        setSupportActionBar(vistaBindingQR.toolbar)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menudesp, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menuLogOut -> {
+                FirebaseAuth.getInstance().signOut()
+                val intentLogOut = Intent(this, InicioSesion::class.java)
+                intentLogOut.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intentLogOut)
+                finishAffinity()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
     private fun tomarFotico() {
         val capturarImagen = capturarImagen ?: return
 

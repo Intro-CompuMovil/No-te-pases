@@ -143,6 +143,11 @@ class InicioSesion : AppCompatActivity() {
         })
     }
 
+    private fun adquirirDatosBus()
+    {
+
+    }
+
     //Código relacionado al ciclo de vida
     override fun onStart() {
         super.onStart()

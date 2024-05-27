@@ -1,11 +1,16 @@
 package com.example.notepases1
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings.Global.putString
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
@@ -48,6 +53,27 @@ class PagarPasaje : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Error al obtener el saldo o el valor del pasaje", Toast.LENGTH_SHORT).show()
             }
+        }
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+    }
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menudesp, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menuLogOut -> {
+                FirebaseAuth.getInstance().signOut()
+                val intentLogOut = Intent(this, InicioSesion::class.java)
+                intentLogOut.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intentLogOut)
+                finishAffinity()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 }

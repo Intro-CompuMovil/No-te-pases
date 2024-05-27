@@ -1,14 +1,19 @@
 package com.example.notepases1
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
@@ -53,6 +58,9 @@ class RecargarCuenta : AppCompatActivity() {
                 Toast.makeText(this, "Ingrese un valor", Toast.LENGTH_SHORT).show()
             }
         }
+
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
     }
 
     fun modificarSaldo(saldoRecarga: EditText, aumento: ImageButton, decremento: ImageButton){
@@ -84,5 +92,26 @@ class RecargarCuenta : AppCompatActivity() {
                 saldoActual.text = "Saldo actual: ${usuario.saldo ?: 0}"
             }
         }
+
     }
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menudesp, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menuLogOut -> {
+                FirebaseAuth.getInstance().signOut()
+                val intentLogOut = Intent(this, InicioSesion::class.java)
+                intentLogOut.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intentLogOut)
+                finishAffinity()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
 }
