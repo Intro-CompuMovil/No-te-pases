@@ -39,6 +39,15 @@
 
     </RelativeLayout>
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/barraNavegacion"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:layout_alignParentTop="true"
+        android:layout_below="@+id/navegacion"/>
+
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="80dp"

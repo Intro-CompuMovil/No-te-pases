@@ -51,6 +51,25 @@ class InformacionBus : AppCompatActivity() {
                 finishAffinity()
                 true
             }
+            R.id.menu -> {
+                FirebaseAuth.getInstance().signOut()
+                if(InicioSesion.datosUsuario!!.tipo == "conductor")
+                {
+                    val intentLogOut = Intent(this, com.example.notepases1.MenuConductor::class.java)
+                    intentLogOut.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    startActivity(intentLogOut)
+                    finishAffinity()
+                }
+                else if(InicioSesion.datosUsuario!!.tipo == "pasajero")
+                {
+                    val intentLogOut = Intent(this, com.example.notepases1.Menu::class.java)
+                    intentLogOut.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    startActivity(intentLogOut)
+                    finishAffinity()
+                }
+
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
