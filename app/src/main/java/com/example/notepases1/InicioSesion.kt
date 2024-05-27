@@ -37,6 +37,7 @@ class InicioSesion : AppCompatActivity() {
 
     companion object{
         var datosUsuario: Usuario? = null
+        var datosBus: Bus? = null
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

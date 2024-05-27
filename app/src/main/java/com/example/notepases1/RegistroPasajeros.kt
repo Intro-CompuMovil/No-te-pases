@@ -10,11 +10,21 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.ktx.Firebase
 
 class RegistroPasajeros : AppCompatActivity() {
+
+    //Firebase
+    private lateinit var auth: FirebaseAuth
+    private val database = FirebaseDatabase.getInstance()
+    private lateinit var refer: DatabaseReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registro_pasajeros)
+        auth = Firebase.auth
 
         val menu = findViewById<ImageButton>(R.id.imageMenu)
         val numPasajeros = findViewById<TextView>(R.id.numPasajeros)
@@ -30,6 +40,9 @@ class RegistroPasajeros : AppCompatActivity() {
         BTNContarPasajero.setOnClickListener {
             contadorPasajeros += 1
             numPasajeros.text = contadorPasajeros.toString()
+            InicioSesion.datosBus?.numPasajeros = contadorPasajeros
+            refer = database.getReference(Paths.PATH_USERS + auth.currentUser!!.uid)
+            refer.child("cantidadPasajeros").setValue(contadorPasajeros)
         }
 
         BTNDescontarPasajero.setOnClickListener {
@@ -37,6 +50,9 @@ class RegistroPasajeros : AppCompatActivity() {
             {
                 contadorPasajeros -= 1
                 numPasajeros.text = contadorPasajeros.toString()
+                InicioSesion.datosBus?.numPasajeros = contadorPasajeros
+                refer = database.getReference(Paths.PATH_USERS + auth.currentUser!!.uid)
+                refer.child("cantidadPasajeros").setValue(contadorPasajeros)
             }
         }
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
