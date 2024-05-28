@@ -112,8 +112,8 @@ class Mapa : AppCompatActivity() {
     }
 
     private fun mostrarBusesCercanos(paraderoId: Int) {
-        val paraderoPath = "paraderos/paradero_$paraderoId"
-        database.child(paraderoPath).child("buses")
+        val paraderoPath = "paraderos/$paraderoId"
+        database.child(paraderoPath).child("buses_id")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (busSnapshot in snapshot.children) {
