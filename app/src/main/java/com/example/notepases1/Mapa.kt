@@ -177,7 +177,7 @@ class Mapa : AppCompatActivity() {
 
     private fun agregarMarcadorParadero(location: GeoPoint) {
         val marcador = Marker(bindingMapa.osmMap)
-        marcador.icon = cambioTamañoIcono(resources.getDrawable(R.drawable.punto_rojo)) // Asumiendo que tienes un drawable llamado `punto_rojo`
+        marcador.icon = cambioTamañoIcono(resources.getDrawable(R.drawable.punto_rojo))
         marcador.position = location
         marcador.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
         marcador.title = "Paradero"
