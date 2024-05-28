@@ -7,31 +7,25 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
 
 class InformacionBus : AppCompatActivity() {
-
-    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_informacion_bus)
 
-        // Initialize Firebase Database
-        database = FirebaseDatabase.getInstance().reference
-
         val cantPasajeros = findViewById<TextView>(R.id.numPasajeros)
         val distanciaParadero = findViewById<TextView>(R.id.kmDistancia)
 
-        val busName = intent.getStringExtra("nombreBus")
-        if (busName != null) {
-            obtenerCantidadPasajeros(busName, cantPasajeros)
-        } else {
-            Toast.makeText(this, "No bus name provided", Toast.LENGTH_SHORT).show()
-        }
+        //Intents y Bundles para próximas entregas
+        /*val informacionBundle = intent.getBundleExtra("infoBus")
+        val categoria = informacionBundle?.getString("cantPersonas")*/
+
+        val numerosPesonas = 1..80
+        val dato1 = numerosPesonas.random()
+        cantPasajeros.text = "${(dato1).toString()}/80"
 
         val numerosKm = 1..5
         val dato2 = numerosKm.random()
@@ -59,12 +53,15 @@ class InformacionBus : AppCompatActivity() {
             }
             R.id.menu -> {
                 FirebaseAuth.getInstance().signOut()
-                if (InicioSesion.datosUsuario!!.tipo == "conductor") {
+                if(InicioSesion.datosUsuario!!.tipo == "conductor")
+                {
                     val intentLogOut = Intent(this, com.example.notepases1.MenuConductor::class.java)
                     intentLogOut.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(intentLogOut)
                     finishAffinity()
-                } else if (InicioSesion.datosUsuario!!.tipo == "pasajero") {
+                }
+                else if(InicioSesion.datosUsuario!!.tipo == "pasajero")
+                {
                     val intentLogOut = Intent(this, com.example.notepases1.Menu::class.java)
                     intentLogOut.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(intentLogOut)
@@ -75,21 +72,5 @@ class InformacionBus : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    private fun obtenerCantidadPasajeros(busName: String, textView: TextView) {
-        database.child("buses").orderByChild("nombre").equalTo(busName)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    for (busSnapshot in snapshot.children) {
-                        val cantidadPasajeros = busSnapshot.child("cantidadPasajeros").getValue(Int::class.java) ?: 0
-                        textView.text = "$cantidadPasajeros/80"
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    error.toException().printStackTrace()
-                }
-            })
     }
 }

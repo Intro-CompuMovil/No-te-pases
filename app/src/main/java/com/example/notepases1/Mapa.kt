@@ -66,7 +66,6 @@ class Mapa : AppCompatActivity() {
 
         val paraderoId = intent.getIntExtra("id", -1)
         if (paraderoId != -1) {
-            mostrarParadero(paraderoId)
             mostrarBusesCercanos(paraderoId)
         } else {
             Toast.makeText(this, "No paradero ID provided", Toast.LENGTH_SHORT).show()
@@ -112,22 +111,6 @@ class Mapa : AppCompatActivity() {
         }
     }
 
-    private fun mostrarParadero(paraderoId: Int) {
-        database.child("paraderos").child(paraderoId.toString())
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val latitud = snapshot.child("coordenada_x").getValue(Double::class.java) ?: 0.0
-                    val longitud = snapshot.child("coordenada_y").getValue(Double::class.java) ?: 0.0
-                    val paraderoLocation = GeoPoint(latitud, longitud)
-                    agregarMarcadorParadero(paraderoLocation)
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    error.toException().printStackTrace()
-                }
-            })
-    }
-
     private fun mostrarBusesCercanos(paraderoId: Int) {
         val paraderoPath = "paraderos/$paraderoId"
         database.child(paraderoPath).child("buses_id")
@@ -135,7 +118,10 @@ class Mapa : AppCompatActivity() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (busSnapshot in snapshot.children) {
                         val busName = busSnapshot.key ?: continue
-                        obtenerUbicacionBus(busName)
+                        val para = busSnapshot.child("para").getValue(Int::class.java) ?: 0
+                        if (para == 1) {
+                            obtenerUbicacionBus(busName)
+                        }
                     }
                 }
 
@@ -173,15 +159,6 @@ class Mapa : AppCompatActivity() {
             cambiarActividad(busName)
             true
         }
-    }
-
-    private fun agregarMarcadorParadero(location: GeoPoint) {
-        val marcador = Marker(bindingMapa.osmMap)
-        marcador.icon = cambioTamañoIcono(resources.getDrawable(R.drawable.punto_rojo))
-        marcador.position = location
-        marcador.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-        marcador.title = "Paradero"
-        bindingMapa.osmMap.overlays.add(marcador)
     }
 
     private fun cambiarActividad(busName: String) {
