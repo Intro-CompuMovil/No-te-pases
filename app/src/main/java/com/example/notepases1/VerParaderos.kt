@@ -10,21 +10,16 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TextView
 import com.google.firebase.database.*
-import org.osmdroid.util.GeoPoint
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import com.google.firebase.auth.FirebaseAuth
+import org.osmdroid.util.GeoPoint
 
 class VerParaderos : AppCompatActivity() {
 
     private lateinit var database: DatabaseReference
     private var arregloParadas: MutableList<String> = ArrayList()
-    private var paradasGeoMap: HashMap<String, GeoPoint> = hashMapOf(
-        "K7 #40" to GeoPoint(4.628243178554855, -74.06538219116572),
-        "K7 #45" to GeoPoint(4.6323221460755875, -74.06411513313485),
-        "K7 #51" to GeoPoint(4.63811449459301, -74.06342813349394),
-        "K7 #56" to GeoPoint(4.642889706166167, -74.06218292000156)
-    )
+    private var paradasGeoMap: HashMap<String, GeoPoint> = HashMap()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +53,7 @@ class VerParaderos : AppCompatActivity() {
             }
             startActivity(intent)
         }
+
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
     }
@@ -80,15 +76,12 @@ class VerParaderos : AppCompatActivity() {
             }
             R.id.menu -> {
                 FirebaseAuth.getInstance().signOut()
-                if(InicioSesion.datosUsuario!!.tipo == "conductor")
-                {
+                if (InicioSesion.datosUsuario!!.tipo == "conductor") {
                     val intentLogOut = Intent(this, com.example.notepases1.MenuConductor::class.java)
                     intentLogOut.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(intentLogOut)
                     finishAffinity()
-                }
-                else if(InicioSesion.datosUsuario!!.tipo == "pasajero")
-                {
+                } else if (InicioSesion.datosUsuario!!.tipo == "pasajero") {
                     val intentLogOut = Intent(this, com.example.notepases1.Menu::class.java)
                     intentLogOut.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(intentLogOut)
@@ -106,10 +99,36 @@ class VerParaderos : AppCompatActivity() {
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     arregloParadas.clear()
+                    paradasGeoMap.clear()
                     for (paradaSnapshot in snapshot.children) {
-                        val parada = paradaSnapshot.child("parada").value as String
-                        arregloParadas.add(parada)
+                        val paradaId = paradaSnapshot.key ?: continue
+                        val para = paradaSnapshot.child("para").getValue(Int::class.java) ?: 0
+                        if (para == 1) {
+                            obtenerParada(paradaId)
+                        }
                     }
+                    (findViewById<ListView>(R.id.listaParadas).adapter as ArrayAdapter<String>).notifyDataSetChanged()
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    // Handle possible errors.
+                    error.toException().printStackTrace()
+                }
+            })
+    }
+
+    private fun obtenerParada(paradaId: String) {
+        database.child(Paths.PATH_PARADEROS).child(paradaId)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val nombreParada = snapshot.child("nombre").getValue(String::class.java) ?: ""
+                    val latitud = snapshot.child("coordenada_x").getValue(Double::class.java) ?: 0.0
+                    val longitud = snapshot.child("coordenada_y").getValue(Double::class.java) ?: 0.0
+                    val geoPoint = GeoPoint(latitud, longitud)
+
+                    arregloParadas.add(nombreParada)
+                    paradasGeoMap[nombreParada] = geoPoint
+
                     (findViewById<ListView>(R.id.listaParadas).adapter as ArrayAdapter<String>).notifyDataSetChanged()
                 }
 

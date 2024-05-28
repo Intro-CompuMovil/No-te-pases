@@ -93,15 +93,12 @@ class Mapa : AppCompatActivity() {
             }
             R.id.menu -> {
                 FirebaseAuth.getInstance().signOut()
-                if(InicioSesion.datosUsuario!!.tipo == "conductor")
-                {
+                if (InicioSesion.datosUsuario!!.tipo == "conductor") {
                     val intentLogOut = Intent(this, com.example.notepases1.MenuConductor::class.java)
                     intentLogOut.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(intentLogOut)
                     finishAffinity()
-                }
-                else if(InicioSesion.datosUsuario!!.tipo == "pasajero")
-                {
+                } else if (InicioSesion.datosUsuario!!.tipo == "pasajero") {
                     val intentLogOut = Intent(this, com.example.notepases1.Menu::class.java)
                     intentLogOut.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(intentLogOut)
@@ -113,13 +110,18 @@ class Mapa : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
     private fun mostrarBusesCercanos(paraderoId: Int) {
-        database.child(Paths.PATH_PARADEROS).child("paradero_$paraderoId").child("buses")
+        val paraderoPath = "paraderos/paradero_$paraderoId"
+        database.child(paraderoPath).child("buses")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (busSnapshot in snapshot.children) {
-                        val busName = busSnapshot.value as String
-                        obtenerUbicacionBus(busName)
+                        val busName = busSnapshot.key ?: continue
+                        val para = busSnapshot.child("para").getValue(Int::class.java) ?: 0
+                        if (para == 1) {
+                            obtenerUbicacionBus(busName)
+                        }
                     }
                 }
 
@@ -130,16 +132,14 @@ class Mapa : AppCompatActivity() {
     }
 
     private fun obtenerUbicacionBus(busName: String) {
-        database.child(Paths.PATH_BUSES).orderByChild("nombreBus").equalTo(busName)
+        database.child("buses").child(busName)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    for (busSnapshot in snapshot.children) {
-                        val busLocationSnapshot = busSnapshot.child("location")
-                        val lat = busLocationSnapshot.child("lat").getValue(Double::class.java) ?: 0.0
-                        val lon = busLocationSnapshot.child("lon").getValue(Double::class.java) ?: 0.0
-                        val busLocation = GeoPoint(lat, lon)
-                        agregarMarcadorBus(busName, busLocation)
-                    }
+                    val busLocationSnapshot = snapshot.child("location")
+                    val lat = busLocationSnapshot.child("lat").getValue(Double::class.java) ?: 0.0
+                    val lon = busLocationSnapshot.child("lon").getValue(Double::class.java) ?: 0.0
+                    val busLocation = GeoPoint(lat, lon)
+                    agregarMarcadorBus(busName, busLocation)
                 }
 
                 override fun onCancelled(error: DatabaseError) {
